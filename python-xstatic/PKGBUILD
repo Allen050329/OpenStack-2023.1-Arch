@@ -1,0 +1,45 @@
+# Maintainer: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=xstatic
+_pycname=XStatic
+pkgbase=python-$_pyname
+pkgname=(python-$_pyname)
+pkgver=1.0.3
+pkgrel=1
+pkgdesc="XStatic base package with minimal support code"
+arch=(any)
+url="https://github.com/xstatic-py/xstatic"
+license=(MIT)
+makedepends=(
+	python
+)
+source=(https://pypi.io/packages/source/${_pycname::1}/$_pycname/$_pycname-$pkgver.tar.gz)
+md5sums=('e4e97649ec12b65370fecc91500c6af3')
+sha256sums=('402544cc9e179489441054f09c807804e115ea246907de87c0355fb4f5a31268')
+sha512sums=('6a897a70a06658823629097784920124fedeabbaae64f7344f70d3dd2f3d722d7b979d7bbe350e1686741fab1df0951f4ce1d7d68a48eb4691b5b28ff134b5f6')
+
+build(){
+	pushd $_pycname-$pkgver
+	python setup.py build
+	popd
+	# pushd $_pycname-$pkgver-py2
+	# python2 setup.py build
+	# popd
+}
+
+_package_python(){
+	depends=(python)
+	cd $_pycname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	sed -i 's/;/;\n/g' $pkgdir/usr/lib/python*/site-packages/${_pycname}-${pkgver}-py*-nspkg.pth
+}
+
+_package_python2(){
+	depends=(python2)
+	cd $_pycname-$pkgver-py2
+	python2 setup.py install --root "$pkgdir" --optimize=1
+	sed -i 's/;/;\n/g' $pkgdir/usr/lib/python*/site-packages/${_pycname}-${pkgver}-py*-nspkg.pth
+}
+
+eval "package_python-${_pyname}(){ _package_python; }"
+# eval "package_python2-${_pyname}(){ _package_python2; }"
