@@ -1,0 +1,65 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=oslo.policy
+_pycname=${_pyname/./-}
+pkgname=python-${_pycname}
+pkgver=4.2.0
+pkgrel=1
+pkgdesc="Oslo Policy library"
+arch=(any)
+url="https://docs.openstack.org/oslo.policy/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-requests
+	python-oslo-config
+	python-oslo-context
+	python-oslo-i18n
+	python-oslo-serialization
+	python-pyaml
+	python-stevedore
+	python-oslo-utils
+)
+makedepends=(
+	python-setuptools
+	python-sphinx
+	python-sphinxcontrib-apidoc
+	python-openstackdocstheme
+)
+checkdepends=(
+	python-oslotest
+	python-requests-mock
+	python-stestr
+	python-sphinx
+	python-coverage
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('8ad6257152ff109676180a0f2a857dbf')
+sha256sums=('fe7a635ee3a8c8a121d89e6ef5a81456e7998e0bfeed1ab91d44b18028473dc3')
+sha512sums=('407800c2efb04f16d4e282ba5cb1fab97ad19b8f6e9d2ea4baa7e47a6f6a6f65a56bcbb79e3e2d67f91ab5145d2d5237c4c3791d28dedc42ea54403f35ae301a')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	export PYTHONPATH="$PWD"
+	python setup.py build
+	# sphinx-build -b text doc/source doc/build/text
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	# mkdir -p "$pkgdir/usr/share/doc"
+	# cp -r doc/build/text "$pkgdir/usr/share/doc/$pkgname"
+	# rm -r "$pkgdir/usr/share/doc/$pkgname/.doctrees"
+}
