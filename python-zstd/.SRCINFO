@@ -1,0 +1,22 @@
+pkgbase = python-zstd
+	pkgdesc = ZSTD Bindings for Python
+	pkgver = 1.5.5.1
+	pkgrel = 1
+	url = https://github.com/sergey-dryabzhinsky/python-zstd
+	arch = x86_64
+	arch = i686
+	arch = arm
+	arch = armv6h
+	arch = armv7h
+	arch = aarch64
+	license = BSD
+	checkdepends = python-pytest
+	makedepends = zstd
+	makedepends = python
+	makedepends = python-setuptools
+	source = https://pypi.io/packages/source/z/zstd/zstd-1.5.5.1.tar.gz
+	md5sums = 479b302e5e269ced1efadad51dc3b399
+	sha256sums = 1ef980abf0e1e072b028d2d76ef95b476632651c96225cf30b619c6eef625672
+	sha512sums = 7dc2f3ffe0f94b56ba0cf8360ee510b292e9b8b1e92b8ba1ad1a9206b50f852a4e67e04d8e4900c0705820163d551644b38977e2864c648aae7dcc6b2a2c0a68
+
+pkgname = python-zstd
