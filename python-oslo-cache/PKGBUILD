@@ -1,0 +1,71 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=oslo.cache
+_pycname=${_pyname/./-}
+pkgname=python-${_pycname}
+pkgver=3.4.0
+pkgrel=1
+pkgdesc="Cache storage for OpenStack projects."
+arch=(any)
+url="https://docs.openstack.org/oslo.cache/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-dogpile.cache
+	python-oslo-config
+	python-oslo-i18n
+	python-oslo-log
+	python-oslo-utils
+)
+makedepends=(
+	python-setuptools
+	python-openstackdocstheme
+	python-sphinx
+	python-sphinxcontrib-apidoc
+	python-mock
+	python-oslotest
+	python-binary-memcached
+	python-memcached
+)
+checkdepends=(
+	python-hacking
+	python-oslotest
+	python-pifpaf
+	bandit
+	python-stestr
+	python-pre-commit
+	python-pymemcache
+	python-binary-memcached
+	python-memcached
+	python-pymongo
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('02c3384744bf45e070e6d0c286bf49d7')
+sha256sums=('48d4a06a25e0d0fba61cff052abaff7b5c5747379be376da5788f0d01cb56943')
+sha512sums=('59e77f63bbd70f1630fad9a5f62b9ba93d73d95d1b4cd93a4ecd2cd963c96c567e55bf0f3f9b05d87d0b43c6e15abd8c08984bae871179e5095795abcd6fcb72')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	export PYTHONPATH="$PWD"
+	python setup.py build
+	sphinx-build -b text doc/source doc/build/text
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	mkdir -p "$pkgdir/usr/share/doc"
+	cp -r doc/build/text "$pkgdir/usr/share/doc/$pkgname"
+	rm -r "$pkgdir/usr/share/doc/$pkgname/.doctrees"
+}
