@@ -1,0 +1,56 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=pymemcache
+pkgbase=python-$_pyname
+pkgname=(python-$_pyname)
+pkgver=4.0.0
+pkgrel=1
+pkgdesc="A comprehensive, fast, pure Python memcached client"
+arch=(any)
+url="https://github.com/pinterest/pymemcache"
+license=(Apache)
+makedepends=(
+	python
+	python-six
+	python-setuptools
+)
+checkdepends=(
+	python-future
+	python-mock
+	python-pytest
+	python-pytest-cov
+	python-gevent
+	python-pylibmc
+	python-memcached
+	python-faker
+	python-zstd
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('1feca786d1a0d52d351caea298aec2cb')
+sha256sums=('27bf9bd1bbc1e20f83633208620d56de50f14185055e49504f4f5e94e94aff94')
+sha512sums=('1a19d887559630e5b991430b8206c2698909e0d6b234df0380f9da5647574560b0fdd98396959cb96670030a61f7d56fea4ecf3272b5c394fc8c31eb2144e1a3')
+
+build(){
+	pushd $_pyname-$pkgver
+	python setup.py build
+	popd
+}
+
+check(){
+	pushd $_pyname-$pkgver
+	python -m pytest
+	popd
+}
+
+_package_python(){
+	depends=(
+		python
+		python-six
+	)
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE.txt "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
+
+eval "package_python-${_pyname}(){ _package_python; }"
