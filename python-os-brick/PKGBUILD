@@ -1,0 +1,76 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=os-brick
+pkgname=python-$_pyname
+pkgver=6.3.0
+pkgrel=1
+pkgdesc="OpenStack Cinder brick library for managing local volume attaches"
+arch=(any)
+url="https://docs.openstack.org/os-brick/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-eventlet
+	python-oslo-concurrency
+	python-oslo-context
+	python-oslo-log
+	python-oslo-i18n
+	python-oslo-privsep
+	python-oslo-serialization
+	python-oslo-service
+	python-oslo-utils
+	python-requests
+	python-tenacity
+	python-os-win
+)
+makedepends=(
+	python-setuptools
+	python-openstackdocstheme
+	python-reno
+	python-sphinx
+	python-os-api-ref
+	python-sphinxcontrib-apidoc
+	python-sphinx-feature-classification
+)
+checkdepends=(
+	# mypy
+	bandit
+	python-hacking
+	# python-flake8-import-order
+	python-coverage
+	python-ddt
+	python-oslotest
+	python-testscenarios
+	python-testtools
+	python-stestr
+	# python-oslo-vmware
+	# python-castellan
+	python-pycodestyle
+	python-doc8
+	python-fixtures
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('7ca45e560d633a6ab794737c3a72698b')
+sha256sums=('207c20f935ac9085127ceaa1f87e855b5be0dc8d9d46ede7593aed0fab44a061')
+sha512sums=('260c0b8edeceefc86e983a2788fc3a654060461eec9b8668a2922f49d7752a32c192c62bef0b074e96e573d0706b3ea3b52d30a5ca311f8e8c7879279b2442aa')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+check(){
+	cd $_pyname-$pkgver
+	# stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	mv "$pkgdir"{/usr,}/etc
+}
