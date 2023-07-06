@@ -1,0 +1,52 @@
+# Maintainer: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=os-win
+pkgname=python-$_pyname
+pkgver=5.9.0
+pkgrel=1
+pkgdesc="Windows / Hyper-V library for OpenStack projects."
+arch=(any)
+url="http://www.cloudbase.it/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-eventlet
+	python-oslo-concurrency
+	python-oslo-config
+	python-oslo-log
+	python-oslo-utils
+	python-oslo-i18n
+)
+makedepends=(python-setuptools)
+checkdepends=(
+	python-hacking
+	python-coverage
+	# python-ddt
+	python-oslotest
+	python-stestr
+	python-testscenarios
+	python-testtools
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('fad432cf40fef0f7d0c396f6df1994a8')
+sha256sums=('4d4ad5122060cdd1312d6909921c7280c7159fa6811a966fa11688fc141808c0')
+sha512sums=('86ad00d172fbfd62da63305ae57ff5c6041ab707d01d589e8693895863b95aef97e5f8f4eb57c14fb0405dfe12b9b9659258d377c96b03e558913bef01dbac92')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+check(){
+	cd $_pyname-$pkgver
+	# stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
