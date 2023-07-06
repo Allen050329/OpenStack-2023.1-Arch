@@ -35,12 +35,4 @@ _package_python(){
 	sed -i 's/;/;\n/g' $pkgdir/usr/lib/python*/site-packages/${_pycname}-${pkgver}-py*-nspkg.pth
 }
 
-_package_python2(){
-	depends=(python2)
-	cd $_pycname-$pkgver-py2
-	python2 setup.py install --root "$pkgdir" --optimize=1
-	sed -i 's/;/;\n/g' $pkgdir/usr/lib/python*/site-packages/${_pycname}-${pkgver}-py*-nspkg.pth
-}
-
 eval "package_python-${_pyname}(){ _package_python; }"
-# eval "package_python2-${_pyname}(){ _package_python2; }"

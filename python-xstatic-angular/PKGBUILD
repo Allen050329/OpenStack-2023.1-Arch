@@ -26,9 +26,6 @@ build(){
 	pushd $_pycname-$pkgver
 	python setup.py build
 	popd
-	# pushd $_pycname-$pkgver-py2
-	# python2 setup.py build
-	# popd
 }
 
 _package_python(){
@@ -40,14 +37,4 @@ _package_python(){
 	python setup.py install --root "$pkgdir" --optimize=1
 }
 
-_package_python2(){
-	depends=(
-		python2
-		python2-xstatic
-	)
-	cd $_pycname-$pkgver-py2
-	python2 setup.py install --root "$pkgdir" --optimize=1
-}
-
 eval "package_python-${_pyname}(){ _package_python; }"
-# eval "package_python2-${_pyname}(){ _package_python2; }"

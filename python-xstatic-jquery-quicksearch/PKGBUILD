@@ -23,7 +23,7 @@ sha256sums=('f38760fe93b504f2855ef25e9bf91df65c8a6601674165e4685fb217bb616fd1')
 sha512sums=('08578fcb448cd5b2234d19fae361f2f63361222be1e0218ef04fcdda9e1377077bdd018cfa684e3736c1837108b1937a8923426747a9cd852729ed585019d092')
 
 prepare(){
-	sed -i '1s/from xstatic.pkg //g' $_pycname-$pkgver/setup.py
+	sed -i 's/from xstatic.pkg //g' $_pycname-$pkgver/setup.py
 }
 
 _package_python(){
