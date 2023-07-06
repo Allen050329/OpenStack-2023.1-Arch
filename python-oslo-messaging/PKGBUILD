@@ -1,0 +1,85 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=oslo.messaging
+_pycname=${_pyname/./-}
+pkgname=python-${_pycname}
+pkgver=14.3.1
+pkgrel=1
+pkgdesc="Oslo Messaging API"
+arch=(any)
+url="https://docs.openstack.org/oslo.messaging/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-futurist
+	python-oslo-config
+	python-oslo-log
+	python-oslo-utils
+	python-oslo-serialization
+	python-oslo-service
+	python-oslo-metrics
+	python-stevedore
+	python-debtcollector
+	python-cachetools
+	python-webob
+	python-pyaml
+	python-amqp
+	python-kombu
+	python-oslo-middleware
+)
+makedepends=(
+	python-setuptools
+	python-openstackdocstheme
+	python-sphinx
+	python-reno
+	python-fixtures
+	python-confluent-kafka
+	python-pyngus
+	python-tenacity
+)
+checkdepends=(
+	python-hacking
+	python-fixtures
+	python-stestr
+	python-pre-commit
+	python-testscenarios
+	python-testtools
+	python-oslotest
+	python-pifpaf
+	python-confluent-kafka
+	python-coverage
+	python-pyngus
+	bandit
+	python-eventlet
+	python-greenlet
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('e838d5283b6d6feda313c5b4c98b02c5')
+sha256sums=('6170057dc88a40f32a558fb9ffd7e2d8925d5068368b6ad45438ea823e1fc189')
+sha512sums=('6691a2a55e25d89e8f86b320d48d3e6f1cb73de35d32746322d1ce246c239c7b1367c88f25afd418834f76e8302a88da375998d195ace61e693a0234d5118d9f')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	export PYTHONPATH="$PWD"
+	python setup.py build
+	sphinx-build -b text doc/source doc/build/text
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	mkdir -p "$pkgdir/usr/share/doc"
+	cp -r doc/build/text "$pkgdir/usr/share/doc/$pkgname"
+	rm -r "$pkgdir/usr/share/doc/$pkgname/.doctrees"
+}
