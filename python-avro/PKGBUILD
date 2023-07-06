@@ -1,0 +1,33 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=avro
+pkgbase=python-$_pyname
+pkgname=(python-$_pyname)
+pkgver=1.11.2
+pkgrel=1
+pkgdesc="Avro is a serialization and RPC framework."
+arch=(any)
+url="https://avro.apache.org/"
+license=(Apache)
+depends=(python)
+makedepends=(
+	python
+	python-setuptools
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('d3ebafeacd6a522c7c542410964da581')
+sha256sums=('53dcd5bffccb9a72136f08d0b18771795eaf4eefb028bbaaed5f4e1787f0e268')
+sha512sums=('ece1ea8589d7c71aafb5826e1f61dab793c97c6352fa0a4086cae1cc88715c3e3889ab2ca0912068f0b0b6c88f51edf8846448fcc03a7a86282eff75c8f39239')
+
+build(){
+	pushd $_pyname-$pkgver
+	python setup.py build
+	popd
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 avro/LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
