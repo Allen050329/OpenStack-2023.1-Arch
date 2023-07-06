@@ -1,0 +1,60 @@
+# Maintainer: zhullyb <zhullyb@outlook.com>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=cursive
+pkgname=python-$_pyname
+pkgver=0.2.3
+pkgrel=1
+pkgdesc="Cursive implements OpenStack-specific validation of digital signatures."
+arch=(any)
+url="https://opendev.org/x/cursive"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-cryptography
+	python-oslo-serialization
+	python-oslo-utils
+	python-oslo-i18n
+	python-oslo-log
+	python-castellan
+)
+checkdepends=(
+	python-hacking
+	python-coverage
+	python-subunit
+	python-mock
+	python-sphinx
+	python-openstackdocstheme
+	python-oslotest
+	python-testrepository
+	python-testscenarios
+	python-testtools
+	python-reno
+)
+makedepends=(
+	python
+	python-setuptools
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+check(){
+	cd $_pyname-$pkgver
+	python -m pytest
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
+md5sums=('c90171b9c3e124169d97b5c6026ba66c')
+sha256sums=('f435f6cdbe6a517f054c1105c36e436d7868124f1b227d310fe809d918a8c10c')
+sha512sums=('abdc19321ebafa55ef3b6b60303431318ef45427392ba052b8f74687bbb6b62e98c9340581341cb851cb575aa09a473c561a96370ffb7801329cd4778403278c')
