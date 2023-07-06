@@ -1,0 +1,63 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=oslo.metrics
+_pycname=${_pyname/./-}
+pkgname=python-${_pycname}
+pkgver=0.6.0
+pkgrel=1
+pkgdesc="Oslo Metrics API"
+arch=(any)
+url="https://docs.openstack.org/oslo.metrics/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-oslo-utils
+	python-oslo-log
+	python-oslo-config
+	python-prometheus_client
+)
+makedepends=(
+	python-setuptools
+	python-openstackdocstheme
+	# python-reno
+	python-sphinx
+	python-sphinxcontrib-apidoc
+	python-oslotest
+)
+checkdepends=(
+	python-hacking
+	python-oslotest
+	python-coverage
+	python-stestr
+	bandit
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('ddb5d69132d317db40f58aad8906ab91')
+sha256sums=('a937b0ea597de8e9957a41c3c80e5d408bb626652a79e87d3ff9600f1b15c850')
+sha512sums=('3f8fa533b540dda0cda46ccd89bde687b5953fdea2d25f53063058f09afbe9c11e71567ac5733957de4d123e99add4fe5aaff8dac0473fba76626f268cea5e7d')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	export PYTHONPATH="$PWD"
+	python setup.py build
+	sphinx-build -b text doc/source doc/build/text
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	mkdir -p "$pkgdir/usr/share/doc"
+	cp -r doc/build/text "$pkgdir/usr/share/doc/$pkgname"
+	rm -r "$pkgdir/usr/share/doc/$pkgname/.doctrees"
+}
