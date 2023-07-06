@@ -1,0 +1,38 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=xstatic-rickshaw
+_pycname=XStatic-Rickshaw
+pkgbase=python-$_pyname
+pkgname=(python-$_pyname)
+pkgver=1.5.1.0
+pkgrel=1
+pkgdesc="Rickshaw 1.5.1 (XStatic packaging standard)"
+arch=(any)
+url="http://code.shutterstock.com/rickshaw/"
+license=(MIT)
+makedepends=(
+	python
+	python-xstatic
+	python-setuptools
+)
+source=(https://pypi.io/packages/source/${_pycname::1}/$_pycname/$_pycname-$pkgver.tar.gz)
+md5sums=('aef17022c8a0ea3d9e2da6237d5175ef')
+sha256sums=('cf278d4bd4e974ddcf7170d20bbb706cc34f93cf61658f2f68f3138374178564')
+sha512sums=('f8fd6a5031b56d790aa30a2388f5db72aa7fb0b3da696c008de99464650394733155fac0d822422ef52bc12887711b3d325673e4b0f25aca045cda007b97c8cb')
+
+prepare(){
+	sed -i 's/from xstatic.pkg //g' $_pycname-$pkgver/setup.py
+}
+
+_package_python(){
+	depends=(
+		python
+		python-xstatic
+	)
+	cd $_pycname-$pkgver
+	export PYTHONPATH=${PWD}/xstatic/pkg
+	python setup.py install --root "$pkgdir" --optimize=1
+}
+
+eval "package_python-${_pyname}(){ _package_python; }"
