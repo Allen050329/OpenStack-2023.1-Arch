@@ -1,0 +1,30 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+
+pkgname=python-sphinx-testing
+pkgver=1.0.1
+pkgrel=1
+pkgdesc="testing utility classes and functions for Sphinx extensions"
+url="https://github.com/sphinx-doc/sphinx-testing"
+license=('BSD')
+arch=('any')
+depends=('python-sphinx')
+makedepends=('python-setuptools')
+checkdepends=('python-nose' 'flake8')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/sphinx-doc/sphinx-testing/archive/refs/tags/$pkgver.tar.gz")
+sha512sums=('a18bba35989dbe43bcd1e8439563920215b6c3d0cb3481b652f1e2530e17d7b8b9d1ecc5470023370f24c71ec6b92b662db6d94dd1f17150cac0e3a7cffc8acd')
+
+build() {
+  cd sphinx-testing-$pkgver
+  python setup.py build
+}
+
+check() {
+  cd sphinx-testing-$pkgver
+  python setup.py nosetests
+}
+
+package() {
+  cd sphinx-testing-$pkgver
+  python setup.py install --root="$pkgdir" --optimize=1
+  install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
