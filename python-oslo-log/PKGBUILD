@@ -1,0 +1,53 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: Andy Botting <andy@andybotting.com>
+
+_module='oslo.log'
+pkgname='python-oslo-log'
+pkgver='5.2.0'
+pkgrel='1'
+pkgdesc='Oslo Log library'
+arch=('any')
+url="https://docs.openstack.org/developer/${_module}/"
+license=('Apache')
+makedepends=('git' 'python-setuptools'
+             'python-pbr'
+             'python-six'
+             'python-oslo-config'
+             'python-oslo-context'
+             'python-oslo-i18n'
+             'python-oslo-utils'
+             'python-oslo-serialization'
+             'python-debtcollector'
+             'python-pyinotify'
+             'python-dateutil'
+             'python-monotonic')
+checkdepends=('python-mock'
+              'python-oslotest'
+              'bandit'
+              'python-reno')
+source=(https://pypi.io/packages/source/${_module::1}/$p_module/$_module-$pkgver.tar.gz)
+sha512sums=('171606a0e93f2a354c8b4369e6674d25b4f2e25a5c91ca3760beb753d7cc9b0d64754ec4ccb10785db3e5b40655be5f0c5f17bf5a3095af6077771a9cd7c2f4b')
+
+build() {
+  cd "${srcdir}/${_module}-${pkgver}"
+  python setup.py build
+}
+
+#  # These are for python 2.x and old python 3.x only
+#  sed -i 's/unittest2/unittest/g' oslo_log/tests/unit/test_versionutils.py
+#  python setup.py test
+#
+#  cd "${srcdir}/${_module}-py2"
+#  PYTHON=python2 python2 setup.py test
+#}
+
+package_python-oslo-log() {
+  depends=('python-six' 'python-pbr' 'python-oslo-config'
+           'python-oslo-context' 'python-oslo-i18n' 'python-oslo-utils'
+           'python-oslo-serialization' 'python-debtcollector'
+           'python-pyinotify' 'python-dateutil' 'python-monotonic')
+  cd "${srcdir}/${_module}-${pkgver}"
+  python setup.py install --root="${pkgdir}/" --optimize=1
+}
+
+# vim:set ts=2 sw=2 et:
