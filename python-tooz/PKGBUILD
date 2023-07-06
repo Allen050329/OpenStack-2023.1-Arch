@@ -1,0 +1,65 @@
+# Maintainer: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=tooz
+pkgname=python-$_pyname
+pkgver=4.1.0
+pkgrel=1
+pkgdesc="Coordination library for distributed systems."
+arch=(any)
+url="https://docs.openstack.org/tooz/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-stevedore
+	python-voluptuous
+	python-msgpack
+	python-fasteners
+	python-tenacity
+	python-futurist
+	python-oslo-utils
+	python-oslo-serialization
+)
+makedepends=(
+	python-setuptools
+	python-sphinx
+	python-openstackdocstheme
+	python-reno
+	consul
+	python-sysv_ipc
+	python-zake
+	python-redis
+	python-psycopg2
+	python-pymysql
+	python-pymemcache
+	python-etcd3
+	python-etcd3gw
+)
+checkdepends=(
+	python-subunit
+	python-testtools
+	python-coverage
+	python-fixtures
+	python-pifpaf
+	python-stestr
+	python-ddt
+	python-nose
+	python-pre-commit
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('70dfae1c219df91a411eb80168196a0f')
+sha256sums=('87d16fa1b86f9b4979412776f75a932e3f1b63979ccd55c978c5d9e1b69c899b')
+sha512sums=('07e887b3fd281fe2c0101198dbab792cae31d10058aedeb4959035436ae4d373638f33ec51d41caa41706c6c86851d3cbe83886fcdfac2a4cfb93ba062cbe68b')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
