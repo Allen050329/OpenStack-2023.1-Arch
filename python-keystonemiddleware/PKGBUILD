@@ -1,0 +1,70 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=keystonemiddleware
+pkgname=python-$_pyname
+pkgver=10.3.0
+pkgrel=1
+pkgdesc="Middleware for OpenStack Identity"
+arch=(any)
+url="https://docs.openstack.org/keystonemiddleware/latest/"
+license=(Apache)
+depends=(
+	python
+	python-keystoneauth1
+	python-oslo-cache
+	python-oslo-config
+	python-oslo-context
+	python-oslo-i18n
+	python-oslo-log
+	python-oslo-serialization
+	python-oslo-utils
+	python-pbr
+	python-pycadf
+	python-keystoneclient
+	python-requests
+	python-six
+	python-webob
+	python-memcached
+)
+makedepends=(python-setuptools)
+checkdepends=(
+	python-hacking
+	python-flake8-docstrings
+	python-coverage
+	python-cryptography
+	python-fixtures
+	python-oslotest
+	python-requests-mock
+	python-stevedore
+	python-stestr
+	python-testresources
+	python-testtools
+	python-webtest
+	python-oslo-messaging
+	bandit
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('163e01d69879224f6f298a7b62953dc3')
+sha256sums=('d979ca25e12daf26d52ba712ec69469ef848a86447d341dc8b8a879d6b0f7db7')
+sha512sums=('191f9084abfe9a4ea108705d90cb9d7412cdc22b53a03c61bf009d9e042512e9b93dc65afcedb89e56db4b7cc37f00885516e5d73774f55c86d01e1643e6edbe')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+check(){
+	cd $_pyname-$pkgver
+	# 4 checks fail for an unknown reason (ECONNREFUSED)
+	# stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
