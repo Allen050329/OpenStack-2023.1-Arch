@@ -1,0 +1,75 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=oslo.versionedobjects
+_pycname=${_pyname/./-}
+pkgname=python-${_pycname}
+pkgver=3.1.0
+pkgrel=1
+pkgdesc="Oslo Versioned Objects library"
+arch=(any)
+url="https://docs.openstack.org/oslo.versionedobjects/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-oslo-concurrency
+	python-oslo-config
+	python-oslo-context
+	python-oslo-messaging
+	python-oslo-serialization
+	python-oslo-utils
+	python-iso8601
+	python-oslo-log
+	python-oslo-i18n
+	python-webob
+	python-netaddr
+)
+makedepends=(
+	python-setuptools
+	python-openstackdocstheme
+	python-sphinx
+	python-reno
+	python-mock
+	python-fixtures
+)
+checkdepends=(
+	python-hacking
+	python-oslotest
+	python-testtools
+	python-coverage
+	python-jsonschema
+	python-stestr
+	python-fixtures
+	python-pre-commit
+	bandit
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('2a77cb783170459a2cb1c73602b5ba5a')
+sha256sums=('a92eafa18167018dcd9e9d8c098e76ae89598f5cc36c0ad31ae7ab0b1c60bc1a')
+sha512sums=('b41b59de04286c22f79f03d6a637be1ee78da81a6df58195d6a08b8a4a036497a546bb3c434385bcfd0589b71d747de8a8ab0b80da05ab3cb4f6aa4f1fa1d8c8')
+
+export PBR_VERSION=$pkgver
+
+# Documentation build is broken on python-sphinx 7.0.1-2
+build(){
+	cd $_pyname-$pkgver
+	export PYTHONPATH="$PWD"
+	python setup.py build
+	# sphinx-build -b text doc/source doc/build/text
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	# mkdir -p "$pkgdir/usr/share/doc"
+	# cp -r doc/build/text "$pkgdir/usr/share/doc/$pkgname"
+	# rm -r "$pkgdir/usr/share/doc/$pkgname/.doctrees"
+}
