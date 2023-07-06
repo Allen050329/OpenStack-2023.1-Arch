@@ -1,0 +1,40 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=django-debreach
+pkgname=python-$_pyname
+pkgver=2.1.0
+pkgrel=1
+pkgdesc="Adds middleware to give some added protection against the BREACH attack in Django."
+arch=(any)
+url="http://github.com/lpomfrey/django-debreach"
+license=(BSD)
+depends=(
+	python
+	python-django
+)
+makedepends=(
+	python-build
+	python-installer
+	python-wheel
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('08a080060b1659e70041ee4fcd728ba8')
+sha256sums=('aeac9f43e0ea97830bed69cb309ad5746b5ed2b9dce733ac4c136c8e16a7d6e5')
+sha512sums=('2f39431f11084677edd00a1d6888cd52dc730df05d1a79cc9410710524bf7e918435932062feff87517879e413a42d4cd3dbcd2e28d438faa958e6e3160cc2e8')
+
+check(){
+	cd $_pyname-$pkgver
+	python runtests.py
+}
+
+build(){
+	cd $_pyname-$pkgver
+	python -m build --wheel --no-isolation
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python -m installer --destdir="$pkgdir" dist/*.whl
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
