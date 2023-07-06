@@ -1,0 +1,18 @@
+Description: Remove mode='U" from open call
+ This is removed from Python 3.11
+Author: Thomas Goirand <zigo@debian.org>
+Bug-Debian: https://bugs.debian.org/1025184
+Forwarded: no
+Last-Update: 2022-12-05
+
+--- sphinx-testing-1.0.1.orig/src/sphinx_testing/path.py
++++ sphinx-testing-1.0.1/src/sphinx_testing/path.py
+@@ -156,7 +156,7 @@ class path(text_type):
+         """
+         Returns the text in the file.
+         """
+-        f = open(self, mode='U', **kwargs)
++        f = open(self, **kwargs)
+         try:
+             return f.read()
+         finally:

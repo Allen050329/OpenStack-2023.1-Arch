@@ -10,8 +10,17 @@ arch=('any')
 depends=('python-sphinx')
 makedepends=('python-setuptools')
 checkdepends=('python-nose' 'flake8')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/sphinx-doc/sphinx-testing/archive/refs/tags/$pkgver.tar.gz")
-sha512sums=('a18bba35989dbe43bcd1e8439563920215b6c3d0cb3481b652f1e2530e17d7b8b9d1ecc5470023370f24c71ec6b92b662db6d94dd1f17150cac0e3a7cffc8acd')
+source=(
+  "$pkgname-$pkgver.tar.gz::https://github.com/sphinx-doc/sphinx-testing/archive/refs/tags/$pkgver.tar.gz"
+  remove-mode-u-from-open.patch
+)
+sha512sums=('a18bba35989dbe43bcd1e8439563920215b6c3d0cb3481b652f1e2530e17d7b8b9d1ecc5470023370f24c71ec6b92b662db6d94dd1f17150cac0e3a7cffc8acd'
+            '8228ab3c51363f94444b7a4dce29ffcb8a510719d85064772c1388f1666fe24dfd4e18e780d54e56fd5926ab2b2b98dd806685cf1174292ad960363167d088d9')
+
+prepare() {
+  cd sphinx-testing-$pkgver
+  patch --forward --strip=1 --input="${srcdir}/remove-mode-u-from-open.patch"
+}
 
 build() {
   cd sphinx-testing-$pkgver
