@@ -1,0 +1,11 @@
+pkg
+src
+yappi-release
+*.tar
+*.gz
+*.xz
+*.zst
+*.zip
+*.lz4
+*.lzo
+*.bz
