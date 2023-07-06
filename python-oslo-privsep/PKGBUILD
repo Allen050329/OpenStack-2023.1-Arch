@@ -1,0 +1,66 @@
+# Maintainer: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=oslo.privsep
+_pycname=${_pyname/./-}
+pkgname=python-${_pycname}
+pkgver=3.1.0
+pkgrel=1
+pkgdesc="OpenStack library for privilege separation"
+arch=(any)
+url="https://docs.openstack.org/oslo.privsep/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-oslo-log
+	python-oslo-i18n
+	python-oslo-config
+	python-oslo-utils
+	python-cffi
+	python-eventlet
+	python-greenlet
+	python-msgpack
+)
+makedepends=(
+	python-setuptools
+	python-openstackdocstheme
+	python-sphinx
+	python-reno
+	python-sphinxcontrib-apidoc
+)
+checkdepends=(
+	python-hacking
+	python-oslotest
+	python-fixtures
+	python-stestr
+	bandit
+	python-pre-commit
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('8119ab8c3e32a7ea8e0a5669e4fadb2e')
+sha256sums=('94d97e7c62bf25919939cf8f177eef900f1735550ddc0bcde70ea7ca8b944944')
+sha512sums=('bd01739169ee497d79663601baa7d056838c04605bec78315edb92ad4a30febc54b06374eddea45bf21360180035f25a5a2b88f39d68485fa6825e82e33e6780')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	export PYTHONPATH="$PWD"
+	python setup.py build
+	sphinx-build -b text doc/source doc/build/text
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	mkdir -p "$pkgdir/usr/share/doc"
+	cp -r doc/build/text "$pkgdir/usr/share/doc/$pkgname"
+	rm -r "$pkgdir/usr/share/doc/$pkgname/.doctrees"
+}
