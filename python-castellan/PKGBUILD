@@ -1,0 +1,67 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: zhullyb <zhullyb@outlook.com>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=castellan
+pkgname=python-$_pyname
+pkgver=4.2.0
+pkgrel=1
+pkgdesc="Generic Key Manager interface for OpenStack"
+arch=(any)
+url="https://opendev.org/openstack/castellan"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-cryptography
+	python-barbicanclient
+	python-oslo-config
+	python-oslo-context
+	python-oslo-i18n
+	python-oslo-log
+	python-oslo-utils
+	python-stevedore
+	python-keystoneauth1
+	python-requests
+)
+checkdepends=(
+	python-hacking
+	python-pyflakes
+	python-coverage
+	python-barbicanclient
+	python-subunit
+	python-oslotest
+	python-stestr
+	python-fixtures
+	python-testscenarios
+	python-testtools
+	bandit
+	python-pifpaf
+	python-pre-commit
+)
+makedepends=(
+	python
+	python-pbr
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('0452e1101d4f2b5517319c1172f091b7')
+sha256sums=('dac7460dce7f61ef56fff64e234ee606ab665b9d5e8ee855f100b71e28d17338')
+sha512sums=('e5df56f1fdc7ed03c217477d87b11e2ab666a0ffec5cf43f47086130c2a89a13929428d458380636f2aa7cef8a914e70e889967c8bbc492ba3662a66384cda64')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	pushd $_pyname-$pkgver
+	python setup.py build
+}
+
+check(){
+	pushd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
