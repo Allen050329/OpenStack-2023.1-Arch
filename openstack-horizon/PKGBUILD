@@ -141,9 +141,11 @@ prepare(){
 build(){
 	cd $_pyname-$pkgver
 	python setup.py build
+	# Documentation build is broken on python-sphinx 7.0.1-2
 	# sphinx-build -b html doc/source doc/build/html
 }
 
+# Check has been broken since 19.0.0
 # check(){
 # 	cd $_pyname-$pkgver
 # 	PYTHONPATH=${PWD} stestr run
