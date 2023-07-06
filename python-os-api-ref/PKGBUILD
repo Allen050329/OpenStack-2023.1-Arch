@@ -1,0 +1,60 @@
+# Maintainer: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=os-api-ref
+pkgname=python-$_pyname
+pkgver=3.0.0
+pkgrel=1
+pkgdesc="Sphinx Extensions to support API reference sites in OpenStack"
+arch=(any)
+url="https://docs.openstack.org/os-api-ref/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-pyaml
+	python-six
+	python-sphinx
+	python-openstackdocstheme
+)
+checkdepends=(
+	python-hacking
+	python-coverage
+	python-subunit
+	python-testrepository
+	python-testtools
+	# python-sphinx-testing
+	python-beautifulsoup4
+	python-stestr
+)
+makedepends=(
+	python
+	python-setuptools
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('1d2a25ceb619895fd8a42b37c3379945')
+sha256sums=('72f8a3b2ef6dbf2cc5beba583a1742cd9cc804e3bcbf89e2b6084167648d329b')
+sha512sums=('ad7030cc91eacb482da19e42d94a81af4c3715f090966e33063d49693f567b0653e2e4a51d9526fe0e2a63480493f148582f96dc811b24e26534c9c05edf3897')
+
+export PBR_VERSION=$pkgver
+
+prepare(){
+	for i in "${source[@]}"
+	do case "${i}" in
+		?*.patch)
+			msg2 "Apply patch ${i}"
+			patch -Np1 <"${i}"
+		;;
+	esac
+	done
+}
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
