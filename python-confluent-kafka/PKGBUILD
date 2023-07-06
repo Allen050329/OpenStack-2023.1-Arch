@@ -1,0 +1,54 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=confluent-kafka
+pkgbase=python-$_pyname
+pkgname=(python-$_pyname)
+pkgver=2.1.1
+pkgrel=1
+pkgdesc="Confluent's Python client for Apache Kafka"
+arch=(x86_64 i686 arm armv6h armv7h aarch64)
+url="https://github.com/confluentinc/confluent-kafka-python"
+license=(Apache)
+makedepends=(
+	librdkafka
+	python
+	python-avro
+	python-fastavro
+	python-requests
+	python-pytest-timeout
+	python-jsonschema
+	python-pyrsistent
+	python-protobuf
+	python-setuptools
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('ea8bda1b0f626be9362c2cdc73363e88')
+sha256sums=('a665e74030a85c5f4203538cfe77e401133a849c4b92052a60225b26052a7e9d')
+sha512sums=('b51fdfc8c4c96eba0bd01a19b566134633df8ffc0e13cf47cae63d0b6e510fee997174b4dd112a9edffd9a3421d9d5eec1e9479ed309f23843e8fa88c3867d3e')
+
+build(){
+	pushd $_pyname-$pkgver
+	python setup.py build
+	popd
+}
+
+_package_python(){
+	depends=(
+		librdkafka
+		python
+		python-avro
+		python-fastavro
+		python-requests
+		python-pytest-timeout
+		python-jsonschema
+		python-pyrsistent
+		python-protobuf
+	)
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE.txt "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	rm -f "$pkgdir"/usr/LICENSE.txt
+}
+
+eval "package_python-${_pyname}(){ _package_python; }"
