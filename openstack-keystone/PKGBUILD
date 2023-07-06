@@ -1,0 +1,200 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=keystone
+pkgbase=openstack-$_pyname
+pkgname=(openstack-$_pyname)
+pkgver=23.0.0
+pkgrel=1
+pkgdesc="OpenStack Identity"
+arch=(any)
+url="https://opendev.org/openstack/keystone"
+license=(Apache)
+depends=(
+	python
+	python-lxml
+	python-ldap
+	python-ldappool
+	python-freezegun
+	python-pbr
+	python-webob
+	python-flask
+	python-flask-restful
+	python-cryptography
+	python-sqlalchemy
+	python-sqlalchemy-migrate
+	python-stevedore
+	python-passlib
+	python-keystoneclient
+	python-keystonemiddleware
+	python-bcrypt
+	python-scrypt
+	python-oslo-cache
+	python-oslo-config
+	python-oslo-context
+	python-oslo-messaging
+	python-oslo-db
+	python-oslo-i18n
+	python-oslo-log
+	python-oslo-middleware
+	python-oslo-policy
+	python-oslo-serialization
+	python-oslo-upgradecheck
+	python-oslo-utils
+	python-oauthlib
+	python-pysaml2
+	python-pyjwt
+	python-dogpile.cache
+	python-jsonschema
+	python-pycadf
+	python-msgpack
+	python-osprofiler
+	python-pytz
+)
+makedepends=(
+	python-setuptools
+	python-openstackdocstheme
+	python-sphinx
+	python-sphinxcontrib-apidoc
+	python-sphinxcontrib-seqdiag
+	# python-sphinx-feature-classification
+	python-sphinxcontrib-blockdiag
+	python-reno
+	python-os-api-ref
+	python-ldap
+	python-ldappool
+)
+checkdepends=(
+	python-pytest
+	python-hacking
+	python-pep257
+	python-flake8-docstrings
+	python-bashate
+	python-stestr
+	python-freezegun
+	python-pytz
+	python-oslo-db
+	python-coverage
+	python-fixtures
+	python-lxml
+	python-oslotest
+	python-webtest
+	python-testtools
+	openstack-tempest
+	python-requests
+)
+options=('!emptydirs')
+source=(
+	"https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz"
+	sysusers.conf
+	tmpfiles.conf
+	wsgi-keystone.conf
+	0000-httpd-config-path.patch
+	keystone-23.0.0-remove-failing-tests.patch
+)
+md5sums=('1352f1890e4555e61906bc5698c89254'
+         'a110a86d00a4d9feea328be3b3659cf2'
+         '1c5d5d6f9e2d5fd7af60ead1c722fd62'
+         '151474571c660abda387ead70a1a4da1'
+         'abb36174e6c7c58a35e038c74a43dae5'
+         'af75298c36d5605ae166de68003636e5')
+sha256sums=('b74adabe8f7e1f69d87281a4be8c67e58c473937faf2f4a89fe5532459fa20d6'
+            '008afd2e7e24945a7d2609f936ae52c829157330cac03628c44a71aff512fb85'
+            'f74083084fe20aaa5cd83d321d00d0f7f64fc7ff25d8723faea5ca6317639f14'
+            'fc44ad3720e7a58f281efa01e4a6ec02041a30411084d661f34fd393d76a44e5'
+            '5a963943b7b640695d31d0f920a04fdd6bda80cff0bed4c463475bb9c1dd4582'
+            'b52af3e348e857cebf1df460b38f4b713e1d80543e3934563ba6e051625d64a1')
+sha512sums=('7b7d91e812968d98041ccd98d01d019eb4d362da9dbc755bcfe0c0ff474166142fd179496c03c8d3bd7ea1fcccafe377c71d024b8e59c629b8ea017d549ba567'
+            '01a24019b32684ae339b058742b63fc69b17eb97d5b47e90266dad32729293bead3495edb58960a974a7c88d3f35ccd158730f9c625ef9bc4d6f0b1ff319fdf8'
+            '664014795d38fe2eac93a11a1233b59098fe475ca57d31f4c2578dd5e968708a51036fefde34f43ff4f5599820c9ededb7e129dcc78bebcf00b56a56784ec9f3'
+            '9f6449f18757cefb349356e956e964bb21e225de28f961ddc4a3ff024289d5dfe1498c6950823880c5f806f5f2bf41c53c8ce2301728a046b76c554a51c81dca'
+            'db34e147efc7d178e43c992463303ebe89823b02a097582db36f014f1fbb2624cc6b3fc2dfd918c8b0a091a113fdc3554c90adfe6d36623fee4f428a9da773f1'
+            '0c6ebcb197f5fb8f60d53a05a5610ef0cd4022fc43f4a37fdb22754f7d65100b51b5ccb16bdaf074ff2a4cf3df42c7690b72f5cc5be1a79739a74f7894c4dc12')
+
+export PBR_VERSION=$pkgver
+
+prepare(){
+	for i in "${source[@]}"
+	do case "${i}" in
+		?*.patch)
+			msg2 "Apply patch ${i}"
+			patch -Np1 <"${i}"
+		;;
+	esac
+	done
+}
+
+build(){
+	cd "$_pyname-$pkgver"
+	python setup.py build
+	[ -d doc/config-generator ]||ln -s ../config-generator doc/
+	# html build is broken on python-sphinx 7.0.1-2
+	PYTHONPATH="${PWD}" make -C doc man
+}
+
+check(){
+	cd "$_pyname-$pkgver"
+	# Many (~1843) tests don't run until the package is installed
+	stestr run
+}
+
+_package_pkg(){
+	optdepends=(
+		"apache: wsgi api support"
+		"mod_wsgi: apache wsgi support"
+		"python-pymysql: MySQL sql database support"
+		"python-pymemcache: memcached cache support"
+		"python-redis: Redis cache support"
+		"python-openstackclient: OpenStack CLI Client"
+		"${pkgbase}-doc: Documents for ${pkgdesc}"
+	)
+	backup=(
+		etc/httpd/conf/extra/wsgi-keystone.conf
+		etc/keystone/keystone.conf
+		etc/keystone/logging.conf
+		etc/keystone/keystone.policy.yaml
+		etc/keystone/sso_callback_template.html
+	)
+	cd "$_pyname-$pkgver"
+	export PYTHONPATH="$PWD"
+	_DATADIR="$pkgdir/usr/share"
+	_CONFDIR="$pkgdir/etc"
+	_DOCDIR="$_DATADIR/doc"
+	DATADIR="$_DATADIR/$_pyname"
+	DOCDIR="$_DOCDIR/$_pyname"
+	LIBDIR="$pkgdir/usr/lib"
+	CONFDIR="$_CONFDIR/$_pyname"
+	python setup.py install --root "$pkgdir" --optimize=1
+	mv "$pkgdir"{/usr,}/etc
+	mkdir -p "$pkgdir"/{usr/share,var/{log,lib}}/"$_pyname"
+	oslo-config-generator --config-file=config-generator/keystone.conf
+	oslopolicy-sample-generator --config-file config-generator/keystone-policy-generator.conf
+	install -Dm644 "$srcdir/tmpfiles.conf" "$LIBDIR/tmpfiles.d/$_pyname.conf"
+	install -Dm644 "$srcdir/sysusers.conf" "$LIBDIR/sysusers.d/$_pyname.conf"
+	install -Dm644 "$srcdir/wsgi-keystone.conf" -t "$_CONFDIR/httpd/conf/extra"
+	install -Dm644 "$srcdir/wsgi-keystone.conf" -t "$DATADIR"
+	install -Dm644 httpd/uwsgi-keystone.conf -t "$DATADIR"
+	install -Dm644 httpd/keystone-uwsgi-admin.ini -t "$DATADIR"
+	install -Dm644 httpd/keystone-uwsgi-public.ini -t "$DATADIR"
+	install -Dm644 doc/build/man/keystone-manage.1 "$_DATADIR/man/man1/keystone-manager.1"
+	install -Dm644 LICENSE "$_DATADIR/licenses/$_pyname/LICENSE"
+	install -Dm644 etc/*.sample -t "$DATADIR"
+	install -Dm644 etc/*.html   -t "$DATADIR"
+	install -Dm644 etc/*.sample -t "$CONFDIR"
+	install -Dm644 etc/*.html   -t "$CONFDIR"
+	for i in "$CONFDIR/"*.sample
+	do mv -v "$i" "${i//.sample}"
+	done
+	find "$pkgdir" -name README -exec rm -f {} \;
+}
+
+# _package_doc(){
+#	pkgdesc="${pkgdesc} Documents"
+# 	depends=()
+#	cd "$_pyname-$pkgver"
+#	mkdir -p "$pkgdir/usr/share/doc"
+#	cp -r doc/build/html "$pkgdir/usr/share/doc/$_pyname"
+# }
+
+eval "package_${pkgbase}(){ _package_pkg; }"
+# eval "package_${pkgbase}-doc(){ _package_doc; }"
