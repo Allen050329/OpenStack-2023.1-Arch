@@ -1,0 +1,33 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=fastavro
+pkgname=python-$_pyname
+pkgver=1.7.4
+pkgrel=1
+pkgdesc="Fast read/write of AVRO files"
+arch=(x86_64 i686 arm armv6h armv7h aarch64)
+url="https://github.com/fastavro/fastavro"
+license=(MIT)
+depends=(
+	python
+	python-snappy
+	python-zstandard
+	python-lz4
+)
+makedepends=(python-setuptools)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('787ad71a24d3f38dc69d1228eb41fd8d')
+sha256sums=('6450f47ac4db95ec3a9e6434fec1f8a3c4c8c941de16205832ca8c67dd23d0d2')
+sha512sums=('9627fe5e69be6aab5541911899fb3ec615d9348ddd5f8ddf4e6a8cf4a152d55202457cbe5e7a566ed0a09e96a4c5de34542c613ea9d44abd7b0a7c1122deeb3e')
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
