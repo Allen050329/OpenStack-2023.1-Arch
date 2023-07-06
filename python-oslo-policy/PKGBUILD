@@ -27,7 +27,7 @@ makedepends=(
 	python-sphinx
 	python-sphinxcontrib-apidoc
 	python-openstackdocstheme
-	# python-reno
+	python-reno
 )
 checkdepends=(
 	python-oslotest

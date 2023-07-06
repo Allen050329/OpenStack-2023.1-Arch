@@ -23,7 +23,7 @@ makedepends=(
 	python-setuptools
 	python-openstackdocstheme
 	python-sphinx
-	# python-reno
+	python-reno
 	python-sphinxcontrib-apidoc
 	python-mock
 	python-oslotest

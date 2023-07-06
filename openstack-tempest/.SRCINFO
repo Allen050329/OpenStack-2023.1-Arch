@@ -10,6 +10,7 @@ pkgbase = openstack-tempest
 	checkdepends = python-oslotest
 	checkdepends = python-pycodestyle
 	makedepends = python-openstackdocstheme
+	makedepends = python-reno
 	makedepends = python-sphinx
 	makedepends = python-sphinxcontrib-svg2pdfconverter
 	makedepends = python-setuptools

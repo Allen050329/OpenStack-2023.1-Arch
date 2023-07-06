@@ -32,7 +32,7 @@ makedepends=(
 	python-setuptools
 	python-sphinx
 	python-openstackdocstheme
-	# python-reno
+	python-reno
 )
 checkdepends=(
 	python-fixtures

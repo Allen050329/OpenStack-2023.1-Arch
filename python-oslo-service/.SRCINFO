@@ -16,6 +16,7 @@ pkgbase = python-oslo-service
 	makedepends = python-setuptools
 	makedepends = python-sphinx
 	makedepends = python-openstackdocstheme
+	makedepends = python-reno
 	depends = python
 	depends = python-pbr
 	depends = python-webob

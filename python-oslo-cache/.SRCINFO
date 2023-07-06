@@ -18,6 +18,7 @@ pkgbase = python-oslo-cache
 	makedepends = python-setuptools
 	makedepends = python-openstackdocstheme
 	makedepends = python-sphinx
+	makedepends = python-reno
 	makedepends = python-sphinxcontrib-apidoc
 	makedepends = python-mock
 	makedepends = python-oslotest

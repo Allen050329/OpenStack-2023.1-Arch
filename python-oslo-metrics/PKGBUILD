@@ -21,7 +21,7 @@ depends=(
 makedepends=(
 	python-setuptools
 	python-openstackdocstheme
-	# python-reno
+	python-reno
 	python-sphinx
 	python-sphinxcontrib-apidoc
 	python-oslotest

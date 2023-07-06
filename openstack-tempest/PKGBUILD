@@ -37,7 +37,7 @@ depends=(
 )
 makedepends=(
 	python-openstackdocstheme
-	# python-reno
+	python-reno
 	python-sphinx
 	python-sphinxcontrib-svg2pdfconverter
 	python-setuptools

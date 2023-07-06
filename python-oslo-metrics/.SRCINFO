@@ -12,6 +12,7 @@ pkgbase = python-oslo-metrics
 	checkdepends = bandit
 	makedepends = python-setuptools
 	makedepends = python-openstackdocstheme
+	makedepends = python-reno
 	makedepends = python-sphinx
 	makedepends = python-sphinxcontrib-apidoc
 	makedepends = python-oslotest
