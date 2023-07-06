@@ -38,15 +38,15 @@ checkdepends=(
 	# mypy
 	bandit
 	python-hacking
-	# python-flake8-import-order
+	python-flake8-import-order
 	python-coverage
 	python-ddt
 	python-oslotest
 	python-testscenarios
 	python-testtools
 	python-stestr
-	# python-oslo-vmware
-	# python-castellan
+	python-oslo-vmware
+	python-castellan
 	python-pycodestyle
 	python-doc8
 	python-fixtures
@@ -65,7 +65,7 @@ build(){
 
 check(){
 	cd $_pyname-$pkgver
-	# stestr run
+	stestr run
 }
 
 package(){

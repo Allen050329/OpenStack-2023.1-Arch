@@ -47,7 +47,7 @@ checkdepends=(
 	python-coverage
 	python-oslotest
 	python-pycodestyle
-	# python-flake8-import-order
+	python-flake8-import-order
 )
 source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
 md5sums=('421eb03a4dd0597846e2ed30b4a15ddc')

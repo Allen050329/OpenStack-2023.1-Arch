@@ -7,6 +7,7 @@ pkgbase = python-os-win
 	license = Apache
 	checkdepends = python-hacking
 	checkdepends = python-coverage
+	checkdepends = python-ddt
 	checkdepends = python-oslotest
 	checkdepends = python-stestr
 	checkdepends = python-testscenarios

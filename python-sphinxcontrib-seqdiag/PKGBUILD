@@ -23,7 +23,7 @@ build() {
 
 check() {
   cd sphinxcontrib-seqdiag-$pkgver
-  # Checks fail for an unknown reason
+  # Tests fail, presumably due to Sphinx version differences
   # python setup.py nosetests
 }
 

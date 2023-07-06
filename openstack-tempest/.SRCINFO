@@ -9,6 +9,7 @@ pkgbase = openstack-tempest
 	checkdepends = python-coverage
 	checkdepends = python-oslotest
 	checkdepends = python-pycodestyle
+	checkdepends = python-flake8-import-order
 	makedepends = python-openstackdocstheme
 	makedepends = python-reno
 	makedepends = python-sphinx

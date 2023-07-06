@@ -23,7 +23,7 @@ makedepends=(python-setuptools)
 checkdepends=(
 	python-hacking
 	python-coverage
-	# python-ddt
+	python-ddt
 	python-oslotest
 	python-stestr
 	python-testscenarios
@@ -43,7 +43,7 @@ build(){
 
 check(){
 	cd $_pyname-$pkgver
-	# stestr run
+	stestr run
 }
 
 package(){

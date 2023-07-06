@@ -10,6 +10,7 @@ pkgbase = python-os-api-ref
 	checkdepends = python-subunit
 	checkdepends = python-testrepository
 	checkdepends = python-testtools
+	checkdepends = python-sphinx-testing
 	checkdepends = python-beautifulsoup4
 	checkdepends = python-stestr
 	makedepends = python
