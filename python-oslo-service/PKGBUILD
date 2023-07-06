@@ -32,6 +32,7 @@ makedepends=(
 	python-setuptools
 	python-sphinx
 	python-openstackdocstheme
+	# python-reno
 )
 checkdepends=(
 	python-fixtures
@@ -39,6 +40,7 @@ checkdepends=(
 	python-oslotest
 	python-requests
 	python-stestr
+	# python-doc8
 	python-coverage
 	bandit
 	python-pre-commit

@@ -27,6 +27,7 @@ makedepends=(
 	python-sphinx
 	python-sphinxcontrib-apidoc
 	python-openstackdocstheme
+	# python-reno
 )
 checkdepends=(
 	python-oslotest
@@ -47,6 +48,7 @@ build(){
 	cd $_pyname-$pkgver
 	export PYTHONPATH="$PWD"
 	python setup.py build
+	# Documentation build is broken on python-sphinx 7.0.1-2
 	# sphinx-build -b text doc/source doc/build/text
 }
 

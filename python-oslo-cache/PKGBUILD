@@ -23,11 +23,13 @@ makedepends=(
 	python-setuptools
 	python-openstackdocstheme
 	python-sphinx
+	# python-reno
 	python-sphinxcontrib-apidoc
 	python-mock
 	python-oslotest
 	python-binary-memcached
 	python-memcached
+	# python-etcd3gw
 )
 checkdepends=(
 	python-hacking
@@ -40,6 +42,7 @@ checkdepends=(
 	python-binary-memcached
 	python-memcached
 	python-pymongo
+	# python-etcd3gw
 )
 options=('!emptydirs')
 source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
