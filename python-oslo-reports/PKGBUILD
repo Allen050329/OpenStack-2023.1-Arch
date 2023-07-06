@@ -1,0 +1,67 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=oslo.reports
+_pycname=${_pyname/./-}
+pkgname=python-${_pycname}
+pkgver=3.0.0
+pkgrel=1
+pkgdesc="Oslo Reports library"
+arch=(any)
+url="https://docs.openstack.org/oslo.reports/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-jinja
+	python-oslo-serialization
+	python-psutil
+	python-oslo-i18n
+	python-oslo-utils
+)
+makedepends=(
+	python-setuptools
+	python-sphinx
+	python-sphinxcontrib-apidoc
+	python-openstackdocstheme
+	python-reno
+)
+checkdepends=(
+	python-hacking
+	python-oslotest
+	python-stestr
+	python-oslo-config
+	python-eventlet
+	python-greenlet
+	python-coverage
+	python-pre-commit
+	bandit
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('b7870d2bd59eab7d4cc55a0ae67d4337')
+sha256sums=('7ce5e26ff021f17b8af5c0abaa1c8b6d465ccd153d6c2bac3f28f637039bd043')
+sha512sums=('1a02db4bd85c91b6bbb4d50c01f5911ebf0905d982c82eba0edf7016919d40f81fec1572f9a945a69a40e6fe7047d7766a1a29b9a58fae4d37bfbfe378e13905')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	export PYTHONPATH="$PWD"
+	python setup.py build
+	sphinx-build -b text doc/source doc/build/text
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	mkdir -p "$pkgdir/usr/share/doc"
+	cp -r doc/build/text "$pkgdir/usr/share/doc/$pkgname"
+	rm -r "$pkgdir/usr/share/doc/$pkgname/.doctrees"
+}
