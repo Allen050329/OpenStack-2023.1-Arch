@@ -1,0 +1,59 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+
+_pyname=sqlalchemy-migrate
+_pycname=${_pyname/./-}
+pkgname=python-${_pycname}
+pkgver=0.13.0
+pkgrel=1
+pkgdesc="Database schema migration for SQLAlchemy"
+arch=(any)
+url="https://sqlalchemy-migrate.readthedocs.io/en/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-sqlalchemy
+	python-decorator
+	python-six
+	python-sqlparse
+	python-tempita
+)
+
+options=('!emptydirs')
+source=(
+	https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz
+	remove-tempest-lib-build-depends-from-upstream.patch
+	fix-sphinx-conf.py-syntax.patch
+)
+md5sums=('86572c92ae84334907f5e3a2cecc92a6'
+         '2f78b740231422ae65ceb3b156786232'
+         'dcab34e6d3092c72c16acbdff6b498bc')
+sha256sums=('0bc02e292a040ade5e35a01d3ea744119e1309cdddb704fdb99bac13236614f8'
+            '1edd872a094ea89a13552f13691ccecfc44fc1b0ac05b15995efa4e19561793d'
+            'd079b3717a28e19cdd740402a1a27c24303746dec6b0b12b9d041075088e8153')
+sha512sums=('1ca826a5d80c1373ffc4b2366dfb6d5dd24204964462873451c97d8ff4d75fc6c63f663c4769b7f6cc00002f6a98d425f41d759e5c010b4b81a8b74ffbb102b6'
+            'd4823c1f3d331b9570190f96173369e813a73fe19d5d18c8fb9f648f7ed8f198bc4132c0bf0878a91d5b9e55f4eb84e8f50472c3a1802b815f6104379e174845'
+            '50eeac147134a0c2d614fbd5aa4ed1e84314e3f202bfdcfac21d0112349de17121bc4224f8b7e1e98cb71334971208a078554a0a6b6e081ae9e7d589702f9dc2')
+
+export PBR_VERSION=$pkgver
+
+prepare(){
+	cd $_pyname-$pkgver
+	patch --forward --strip=1 --input="${srcdir}/remove-tempest-lib-build-depends-from-upstream.patch"
+	patch --forward --strip=1 --input="${srcdir}/fix-sphinx-conf.py-syntax.patch"
+}
+
+build(){
+	cd $_pyname-$pkgver
+	export PYTHONPATH="$PWD"
+	python setup.py build
+	sphinx-build -b text doc/source doc/build/text
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	mkdir -p "$pkgdir/usr/share/doc"
+	cp -r doc/build/text "$pkgdir/usr/share/doc/$pkgname"
+	rm -r "$pkgdir/usr/share/doc/$pkgname/.doctrees"
+}
