@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-angular
 	pkgdesc = Angular 1.8.2 (XStatic packaging standard)
 	pkgver = 1.8.2.2
-	pkgrel = 1
+	pkgrel = 2
 	url = http://angularjs.org/
 	arch = any
 	license = MIT

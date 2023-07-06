@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-spin
 	pkgdesc = Spin 1.2.5 (XStatic packaging standard)
 	pkgver = 1.2.5.3
-	pkgrel = 1
+	pkgrel = 2
 	url = http://fgnass.github.io/spin.js/
 	arch = any
 	license = MIT

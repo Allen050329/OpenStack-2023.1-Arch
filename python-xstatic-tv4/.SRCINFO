@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-tv4
 	pkgdesc = tv4 1.2.7 (XStatic packaging standard)
 	pkgver = 1.2.7.0
-	pkgrel = 1
+	pkgrel = 2
 	url = http://geraintluff.github.com/tv4/
 	arch = any
 	license = MIT

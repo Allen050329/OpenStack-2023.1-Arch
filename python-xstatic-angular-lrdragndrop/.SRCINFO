@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-angular-lrdragndrop
 	pkgdesc = Angular-lrdragndrop 1.0.2.4 (XStatic packaging standard)
 	pkgver = 1.0.2.4
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/lorenzofox3/lrDragNDrop
 	arch = any
 	license = MIT

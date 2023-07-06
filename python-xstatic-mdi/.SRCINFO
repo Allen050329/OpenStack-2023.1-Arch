@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-mdi
 	pkgdesc = mdi 1.6.50 (XStatic packaging standard)
 	pkgver = 1.6.50.2
-	pkgrel = 1
+	pkgrel = 2
 	url = http://materialdesignicons.com/
 	arch = any
 	license = MIT

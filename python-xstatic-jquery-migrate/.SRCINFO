@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-jquery-migrate
 	pkgdesc = JQuery-Migrate 3.3.2 (XStatic packaging standard)
 	pkgver = 3.3.2.1
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/jquery/jquery-migrate
 	arch = any
 	license = MIT

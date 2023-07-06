@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-bootswatch
 	pkgdesc = bootswatch 3.3.7 (XStatic packaging standard)
 	pkgver = 3.3.7.0
-	pkgrel = 1
+	pkgrel = 2
 	url = http://bootswatch.com/
 	arch = any
 	license = MIT

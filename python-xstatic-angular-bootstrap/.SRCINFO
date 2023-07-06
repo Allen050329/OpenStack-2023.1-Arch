@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-angular-bootstrap
 	pkgdesc = Angular-Bootstrap 2.5.0 (XStatic packaging standard)
 	pkgver = 2.5.0.0
-	pkgrel = 1
+	pkgrel = 2
 	url = http://angular-ui.github.io/bootstrap/
 	arch = any
 	license = MIT

@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-jquery
 	pkgdesc = jQuery 3.5.1 (XStatic packaging standard)
 	pkgver = 3.5.1.1
-	pkgrel = 1
+	pkgrel = 2
 	url = https://jquery.com/
 	arch = any
 	license = MIT

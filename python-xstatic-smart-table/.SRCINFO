@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-smart-table
 	pkgdesc = smart-table 1.4.13 (XStatic packaging standard)
 	pkgver = 1.4.13.2
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/lorenzofox3/Smart-Table
 	arch = any
 	license = MIT

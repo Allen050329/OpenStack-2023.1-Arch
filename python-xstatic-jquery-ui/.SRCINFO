@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-jquery-ui
 	pkgdesc = jquery-ui 1.13.0 (XStatic packaging standard)
 	pkgver = 1.13.0.1
-	pkgrel = 1
+	pkgrel = 2
 	url = https://jqueryui.com/
 	arch = any
 	license = MIT

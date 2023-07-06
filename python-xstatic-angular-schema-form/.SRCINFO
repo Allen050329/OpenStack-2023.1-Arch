@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-angular-schema-form
 	pkgdesc = Angular Schema-Form 0.8.13.0 (XStatic packaging standard)
 	pkgver = 0.8.13.0
-	pkgrel = 1
+	pkgrel = 2
 	url = http://schemaform.io/
 	arch = any
 	license = MIT

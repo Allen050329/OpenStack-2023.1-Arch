@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-font-awesome
 	pkgdesc = Font-Awesome 4.7.0 (XStatic packaging standard)
 	pkgver = 4.7.0.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://fortawesome.github.io/Font-Awesome/
 	arch = any
 	license = MIT

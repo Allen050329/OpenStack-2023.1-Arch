@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-jsencrypt
 	pkgdesc = JSEncrypt 2.3.1 (XStatic packaging standard)
 	pkgver = 2.3.1.1
-	pkgrel = 1
+	pkgrel = 2
 	url = http://travistidwell.com/jsencrypt/
 	arch = any
 	license = MIT

@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-rickshaw
 	pkgdesc = Rickshaw 1.5.1 (XStatic packaging standard)
 	pkgver = 1.5.1.0
-	pkgrel = 1
+	pkgrel = 2
 	url = http://code.shutterstock.com/rickshaw/
 	arch = any
 	license = MIT

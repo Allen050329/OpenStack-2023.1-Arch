@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-d3
 	pkgdesc = D3 3.5.17 (XStatic packaging standard)
 	pkgver = 3.5.17.0
-	pkgrel = 1
+	pkgrel = 2
 	url = http://d3js.org/
 	arch = any
 	license = BSD

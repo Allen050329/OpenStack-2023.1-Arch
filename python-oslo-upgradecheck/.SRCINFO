@@ -1,7 +1,7 @@
 pkgbase = python-oslo-upgradecheck
 	pkgdesc = Common code for writing OpenStack upgrade checks
 	pkgver = 2.0.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://docs.openstack.org/oslo.upgradecheck/latest/
 	arch = any
 	license = Apache

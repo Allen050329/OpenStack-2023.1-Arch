@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-bootstrap-scss
 	pkgdesc = Bootstrap-SCSS 3.4.1 (XStatic packaging standard)
 	pkgver = 3.4.1.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/twbs/bootstrap-sass
 	arch = any
 	license = MIT

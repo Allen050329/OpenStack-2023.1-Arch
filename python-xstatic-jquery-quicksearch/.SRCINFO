@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-jquery-quicksearch
 	pkgdesc = JQuery.quicksearch 2.0.3 (XStatic packaging standard)
 	pkgver = 2.0.3.2
-	pkgrel = 1
+	pkgrel = 2
 	url = http://plugins.jquery.com/jquery.quicksearch/
 	arch = any
 	license = MIT

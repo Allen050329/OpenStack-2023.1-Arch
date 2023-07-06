@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-hogan
 	pkgdesc = Hogan 2.0.0 (XStatic packaging standard)
 	pkgver = 2.0.0.3
-	pkgrel = 1
+	pkgrel = 2
 	url = http://twitter.github.io/hogan.js/
 	arch = any
 	license = Apache

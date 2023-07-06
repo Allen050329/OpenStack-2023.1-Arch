@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-jasmine
 	pkgdesc = Jasmine 2.4.1 (XStatic packaging standard)
 	pkgver = 2.4.1.2
-	pkgrel = 1
+	pkgrel = 2
 	url = http://jasmine.github.io/
 	arch = any
 	license = MIT

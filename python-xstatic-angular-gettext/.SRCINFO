@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-angular-gettext
 	pkgdesc = Angular-Gettext 2.4.1 (XStatic packaging standard)
 	pkgver = 2.4.1.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://angular-gettext.rocketeer.be/
 	arch = any
 	license = MIT

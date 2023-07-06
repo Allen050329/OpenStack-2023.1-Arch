@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-termjs
 	pkgdesc = term.js 0.0.7 (XStatic packaging standard)
 	pkgver = 0.0.7.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/chjj/term.js
 	arch = any
 	license = MIT

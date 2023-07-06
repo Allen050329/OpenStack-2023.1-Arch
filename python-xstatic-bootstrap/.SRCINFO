@@ -1,7 +1,7 @@
 pkgbase = python-xstatic-bootstrap
 	pkgdesc = Bootstrap 4.5.3 (XStatic packaging standard)
 	pkgver = 4.5.3.1
-	pkgrel = 1
+	pkgrel = 2
 	url = https://getbootstrap.com/
 	arch = any
 	license = MIT
