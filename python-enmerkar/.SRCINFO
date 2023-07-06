@@ -1,0 +1,27 @@
+pkgbase = python-enmerkar
+	pkgdesc = Utilities for using Babel in Django
+	pkgver = 0.7.1
+	pkgrel = 3
+	url = https://github.com/Zegocover/enmerkar
+	arch = any
+	license = BSD
+	checkdepends = python-pytest
+	checkdepends = python-pytest-django
+	makedepends = python-setuptools
+	depends = python
+	depends = python-django
+	depends = python-babel
+	source = https://pypi.io/packages/source/e/enmerkar/enmerkar-0.7.1.tar.gz
+	source = fix-bytesio-import.patch
+	source = django-4.x-django.conf.urls.url-is-removed.patch
+	md5sums = a4967fc49a2f6cdaf0f4cf6273508ba8
+	md5sums = 8b6f671ae51c131fb3ae1dd9b4cde658
+	md5sums = 84fd4f91d3604e43619591a6593f55c4
+	sha256sums = a4a6c859b4ed293deee40ff61d6695b3ff7bc153770a1799f2be872181282e00
+	sha256sums = 9da34249dfc0a9d72de37576a3b46b6c4d762c52c7191fe1a86e62c578f62022
+	sha256sums = 4d40376e358f313ea2e8bdefc14ff8cbd5a66848ff8c55072e85911f9207a159
+	sha512sums = 6d0d0d85fc4057dbc8536220538572000f2816e87874e21a3008f5a05edff46af4b2f09b23acff5813a8174402b3bc4ec8864851f9cc8de50b4386d024b3aeda
+	sha512sums = ad1334e19b1cb578096dbfc3391cf0d7d254776029401c1aef33720264b25c11e7a370bf0d65d29c77fa72640496679944ca3d19d385b12adeb5cc1d2709269c
+	sha512sums = afbec6e30c36e354346ba321b0dd2fe1055d23f6a8a3c668847f9b53e83f5fb3f25b2e48dcd7775d69dd4b96a4821887d36076ea9d096e2f48b3c3b92788b012
+
+pkgname = python-enmerkar
