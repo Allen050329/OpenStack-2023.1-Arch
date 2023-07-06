@@ -1,0 +1,73 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=oslo.service
+_pycname=${_pyname/./-}
+pkgname=python-${_pycname}
+pkgver=3.1.1
+pkgrel=1
+pkgdesc="Oslo Service API"
+arch=(any)
+url="https://docs.openstack.org/oslo.service/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-webob
+	python-debtcollector
+	python-eventlet
+	python-fixtures
+	python-greenlet
+	python-oslo-utils
+	python-oslo-concurrency
+	python-oslo-config
+	python-oslo-log
+	python-oslo-i18n
+	python-pastedeploy
+	python-routes
+	python-paste
+	python-yappi
+)
+makedepends=(
+	python-setuptools
+	python-sphinx
+	python-openstackdocstheme
+)
+checkdepends=(
+	python-fixtures
+	python-hacking
+	python-oslotest
+	python-requests
+	python-stestr
+	python-coverage
+	bandit
+	python-pre-commit
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('17bed114d1e9bf0f612cfdf324230d06')
+sha256sums=('ea0b93f922ef49ceca475f2dab78468c76281f73170614599e2c83420f8ea439')
+sha512sums=('53e5e3dc6f25105c21eaf5fb7dd6910c4e5219c5d5effc6993c13b04bd68cdab4417a39298c41d1fee551850abf4cf6c5ba3933b8964ed054615cf96c69f51c5')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	export PYTHONPATH="$PWD"
+	python setup.py build
+	sphinx-build -b text doc/source doc/build/text
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	mkdir -p "$pkgdir/usr/share/doc"
+	cp -r doc/build/text "$pkgdir/usr/share/doc/$pkgname"
+	rm -r "$pkgdir/usr/share/doc/$pkgname/.doctrees"
+}
