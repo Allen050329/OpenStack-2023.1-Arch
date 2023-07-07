@@ -1,0 +1,81 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+_pyname=glance-store
+_pycname=${_pyname//-/_}
+pkgname=python-$_pyname
+pkgver=4.6.0
+pkgrel=1
+pkgdesc="OpenStack Image Service Store library"
+arch=(any)
+url="https://docs.openstack.org/glance_store/latest/"
+license=(Apache)
+depends=(
+	python
+	python-oslo-config
+	python-oslo-i18n
+	python-oslo-serialization
+	python-oslo-utils
+	python-oslo-concurrency
+	python-stevedore
+	python-eventlet
+	python-six
+	python-jsonschema
+	python-keystoneauth1
+	python-keystoneclient
+	python-requests
+)
+makedepends=(
+	python-setuptools
+	python-sphinx
+	python-openstackdocstheme
+	python-reno
+	python-sphinxcontrib-apidoc
+)
+checkdepends=(
+	python-hacking
+	python-doc8
+	python-coverage
+	python-fixtures
+	python-subunit
+	python-requests-mock
+	python-retrying
+	python-stestr
+	python-testscenarios
+	python-testtools
+	python-oslotest
+	python-boto3
+	python-oslo-vmware
+	python-httplib2
+	python-swiftclient
+	python-cinderclient
+	python-os-brick
+	python-oslo-rootwrap
+	python-oslo-privsep
+)
+source=("https://pypi.io/packages/source/${_pycname::1}/$_pycname/$_pycname-$pkgver.tar.gz")
+md5sums=('402b4f1115b4082f8cabb6cccec15841')
+sha256sums=('64c34dad50dd1f461c4c6c519c1db66a0097f7cebadbff18525aac9cd189723d')
+sha512sums=('514769f0afccfd6f4a5b4ca0da2d8765a58bfbde16d7118a45e80325c1289f46104a1059bf3e39fe020311cd6ea6af2642f9e80a00b38a3e50f26f584ab5d7b6')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pycname-$pkgver
+	python setup.py build
+	sphinx-build -b html doc/source doc/build/html
+}
+
+check(){
+	cd $_pycname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pycname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	mkdir -p "${pkgdir}/usr/share/doc"
+	cp -r doc/build/html "${pkgdir}/usr/share/doc/${pkgname}"
+	rm -r "${pkgdir}/usr/share/doc/${pkgname}/.doctrees"
+	mv "$pkgdir"{/usr,}/etc
+}
