@@ -1,0 +1,66 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=oslo.limit
+_pycname=${_pyname/./-}
+pkgname=python-${_pycname}
+pkgver=2.1.0
+pkgrel=1
+pkgdesc="Limit enforcement library to assist with quota calculation."
+arch=(any)
+url="https://docs.openstack.org/oslo.limit/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-keystoneauth1
+	python-oslo-config
+	python-oslo-i18n
+	python-oslo-log
+	python-openstacksdk
+)
+makedepends=(
+	python-setuptools
+	python-openstackdocstheme
+	python-reno
+	python-sphinx
+	python-sphinxcontrib-apidoc
+	python-fixtures
+)
+checkdepends=(
+	python-stestr
+	python-hacking
+	python-oslotest
+	python-stestr
+	bandit
+	python-pre-commit
+	python-fixtures
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('3b03f2c6473d0a918ac4ba2d09cccfcd')
+sha256sums=('0ad533e73ba677ef2120cf2b38b7237d42aac9b747a60c5e368e596930669beb')
+sha512sums=('995499279370c434345dd09508d12f0d872315ad9ad85f727298b8f8ad4f091286dcf593e3f304ed1296f8b6c4e2c6ceb01da918202c9f84cb91f41b8c87d77f')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	export PYTHONPATH="$PWD"
+	python setup.py build
+	sphinx-build -b text doc/source doc/build/text
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	mkdir -p "$pkgdir/usr/share/doc"
+	cp -r doc/build/text "$pkgdir/usr/share/doc/$pkgname"
+	rm -r "$pkgdir/usr/share/doc/$pkgname/.doctrees"
+}
