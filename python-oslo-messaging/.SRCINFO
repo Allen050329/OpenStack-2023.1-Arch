@@ -46,12 +46,8 @@ pkgbase = python-oslo-messaging
 	depends = python-oslo-middleware
 	options = !emptydirs
 	source = https://pypi.io/packages/source/o/oslo.messaging/oslo.messaging-14.3.1.tar.gz
-	source = python-oslo-messaging-14.3.1-remove-failing-test.patch
 	md5sums = e838d5283b6d6feda313c5b4c98b02c5
-	md5sums = d3164ef8be504dd019b62c58e65b4461
 	sha256sums = 6170057dc88a40f32a558fb9ffd7e2d8925d5068368b6ad45438ea823e1fc189
-	sha256sums = 55b75e1840162a8370199dde50d58360008f9c9d4183d370609143ee18c74c2b
 	sha512sums = 6691a2a55e25d89e8f86b320d48d3e6f1cb73de35d32746322d1ce246c239c7b1367c88f25afd418834f76e8302a88da375998d195ace61e693a0234d5118d9f
-	sha512sums = d8f6766a946bb324cf8bc0f2ec8c89ba3b7af732b4bd7cfe12cb2f390f8110523ca02fb1b6b5c21aba3f03fd16e10b3f3d29c600fda4c40592ad1e64b74e064d
 
 pkgname = python-oslo-messaging
