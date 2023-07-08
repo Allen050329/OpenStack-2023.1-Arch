@@ -1,0 +1,51 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=os-traits
+pkgname=python-$_pyname
+pkgver=3.0.0
+pkgrel=1
+pkgdesc="A library containing standardized trait strings"
+arch=(any)
+url="https://docs.openstack.org/os-traits/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+)
+makedepends=(
+	python-setuptools
+	python-sphinx
+	python-openstackdocstheme
+	python-reno
+)
+checkdepends=(
+	python-hacking
+	python-coverage
+	python-oslotest
+	python-stestr
+	python-testscenarios
+	python-testtools
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('4719c11eaa0b0a6416c989fbdf5a1b7c')
+sha256sums=('4a69bb8a1499bba1616302967c76ab65374269c66924ceb174677e37f6b975c9')
+sha512sums=('b5d9c3039a8d05e634de92d7ad27489bc51548c947b7e0628cf23edbe7712d8da298d937e2aaae6c54a08b193c6df73f6ea9e1cfa48d01251fe2ea18943ca501')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
