@@ -1,0 +1,39 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: Andy Botting <andy@andybotting.com>
+
+pkgname=python-ironicclient
+pkgver=5.3.0
+pkgrel=1
+pkgdesc='Python client library for Ironic'
+arch=('any')
+url="https://docs.openstack.org/$pkgname/"
+license=('Apache')
+depends=('python-six' 'python-requests' 'python-yaml'
+         'python-openstackclient' 'python-prettytable' 'python-oslo-utils'
+         'python-oslo-serialization' 'python-oslo-i18n' 'python-osc-lib'
+         'python-keystoneauth1' 'python-jsonschema' 'python-dogpile.cache'
+         'python-appdirs' 'python-pbr')
+checkdepends=('python-fixtures' 'python-requests-mock' 'python-mock'
+              'python-babel' 'python-oslotest' 'python-testtools' 'python-tempest'
+              'python-stestr' 'python-ddt' 'python-openstackclient')
+source=("https://opendev.org/openstack/$pkgname/archive/$pkgver.tar.gz")
+sha512sums=('6a26de5bae04f2c98213cb17c1a4b6750a26340843ed9dc3f8f7b95507f9eae149282334cc94b9efb1616b0758c4e8bd9d50f01a888e3a8a8c5b54236719a15e')
+
+export PBR_VERSION=$pkgver
+
+build() {
+  cd $pkgname
+  python setup.py build
+}
+
+check() {
+  cd $pkgname
+  stestr run
+}
+
+package() {
+  cd $pkgname
+  python setup.py install --root="$pkgdir" --optimize=1
+}
+
+# vim:set ts=2 sw=2 et:
