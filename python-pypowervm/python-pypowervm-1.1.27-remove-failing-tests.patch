@@ -1,0 +1,73 @@
+diff --color --unified --recursive --text a/pypowervm/tests/tasks/test_slot_map.py b/pypowervm/tests/tasks/test_slot_map.py
+--- a/pypowervm/tests/tasks/test_slot_map.py	2021-12-03 18:02:52.000000000 +0800
++++ b/pypowervm/tests/tasks/test_slot_map.py	2023-07-08 18:52:16.520865253 +0800
+@@ -151,46 +151,6 @@
+ 
+     @mock.patch('pypowervm.wrappers.managed_system.System.get')
+     @mock.patch('pypowervm.wrappers.network.VSwitch.get')
+-    @mock.patch('warnings.warn')
+-    def test_register_cna(self, mock_warn, mock_vsw_get, mock_sys_get):
+-        """Test deprecated register_cna."""
+-        mock_vsw_get.return_value = vswitchfeed
+-        mock_sys_get.return_value = ['sys']
+-        smt = self.smt_impl('foo')
+-        for cna in cnafeed1:
+-            smt.register_cna(cna)
+-        self.assertEqual({3: {'CNA': {'5E372CFD9E6D': 'ETHERNET0'}},
+-                          4: {'CNA': {'2A2E57A4DE9C': 'ETHERNET0'}},
+-                          6: {'CNA': {'3AEAC528A7E3': 'MGMTSWITCH'}}},
+-                         smt.topology)
+-        # The vswitch_map is cached in the slot_map, so these only get
+-        # called once
+-        self.assertEqual(mock_vsw_get.call_count, 1)
+-        self.assertEqual(mock_sys_get.call_count, 1)
+-
+-        self.assertEqual(mock_warn.call_count, 3)
+-
+-    @mock.patch('warnings.warn')
+-    def test_drop_cna(self, mock_warn):
+-        """Test deprecated drop_cna."""
+-        smt = self.smt_impl('foo')
+-        smt._slot_topo = {3: {'CNA': {'5E372CFD9E6D': 'ETHERNET0'}},
+-                          4: {'CNA': {'2A2E57A4DE9C': 'ETHERNET0'}},
+-                          6: {'CNA': {'3AEAC528A7E3': 'MGMTSWITCH'}}}
+-        # Drop the first CNA and verify it was removed
+-        smt.drop_cna(cnafeed1[0])
+-        self.assertEqual({4: {'CNA': {'2A2E57A4DE9C': 'ETHERNET0'}},
+-                          6: {'CNA': {'3AEAC528A7E3': 'MGMTSWITCH'}}},
+-                         smt.topology)
+-
+-        # Drop all remaining CNAs, including a redundant drop on index 0
+-        for cna in cnafeed1:
+-            smt.drop_cna(cna)
+-        self.assertEqual({}, smt.topology)
+-        self.assertEqual(mock_warn.call_count, 4)
+-
+-    @mock.patch('pypowervm.wrappers.managed_system.System.get')
+-    @mock.patch('pypowervm.wrappers.network.VSwitch.get')
+     def test_register_vnet(self, mock_vsw_get, mock_sys_get):
+         """Test register_vnet."""
+         mock_vsw_get.return_value = vswitchfeed
+diff --color --unified --recursive --text a/pypowervm/tests/tasks/test_storage.py b/pypowervm/tests/tasks/test_storage.py
+--- a/pypowervm/tests/tasks/test_storage.py	2021-12-03 18:02:52.000000000 +0800
++++ b/pypowervm/tests/tasks/test_storage.py	2023-07-08 18:52:39.624405519 +0800
+@@ -928,19 +928,6 @@
+             lu._cloned_from_udid('yyabc123%d' % cloned_from_idx)
+         return lu
+ 
+-    @mock.patch('warnings.warn')
+-    @mock.patch('pypowervm.tasks.storage.crt_lu')
+-    def test_crt_lu_linked_clone(self, mock_crt_lu, mock_warn):
+-        src_lu = self.ssp.logical_units[0]
+-
+-        mock_crt_lu.return_value = ('ssp', 'dst_lu')
+-        self.assertEqual(('ssp', 'dst_lu'), ts.crt_lu_linked_clone(
+-            self.ssp, 'clust1', src_lu, 'linked_lu'))
+-        mock_crt_lu.assert_called_once_with(
+-            self.ssp, 'linked_lu', 0, thin=True, typ=stor.LUType.DISK,
+-            clone=src_lu)
+-        mock_warn.assert_called_once_with(mock.ANY, DeprecationWarning)
+-
+     def test_image_lu_in_use(self):
+         # The orphan will trigger a warning as we cycle through all the LUs
+         # without finding any backed by this image.
