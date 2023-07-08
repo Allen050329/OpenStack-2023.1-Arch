@@ -1,0 +1,26 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: Jerome Leclanche <jerome@leclan.ch>
+
+_pkgname=pyScss
+pkgname=python-pyscss
+pkgver=1.4.0
+pkgrel=1
+pkgdesc="A SCSS compiler for Python"
+arch=("any")
+license=("GPL")
+url="https://github.com/Kronuz/pyScss"
+depends=("python")
+makedepends=("python-setuptools")
+source=("https://pypi.python.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha256sums=('8f35521ffe36afa8b34c7d6f3195088a7057c185c2b8f15ee459ab19748669ff')
+
+
+build() {
+	cd "$srcdir/$_pkgname-$pkgver"
+	python setup.py build
+}
+
+package() {
+	cd "$srcdir/$_pkgname-$pkgver"
+	python setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 --skip-build
+}
