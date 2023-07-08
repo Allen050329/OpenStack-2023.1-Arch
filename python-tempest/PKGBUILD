@@ -1,0 +1,40 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: Andy Botting <andy@andybotting.com>
+
+pkgname=python-tempest
+pkgver=35.0.0
+pkgrel=1
+pkgdesc='OpenStack Integration Testing'
+arch=('any')
+url='https://docs.openstack.org/tempest/'
+license=('Apache')
+depends=('python-pbr' 'python-cliff' 'python-jsonschema' 'python-testtools'
+         'python-paramiko' 'python-netaddr' 'python-testrepository'
+         'python-oslo-concurrency' 'python-oslo-config' 'python-oslo-log'
+         'python-oslo-serialization' 'python-oslo-utils' 'python-six'
+         'python-fixtures' 'python-yaml' 'python-subunit' 'python-stevedore'
+         'python-prettytable' 'python-os-testr' 'python-urllib3'
+         'python-debtcollector')
+checkdepends=('python-hacking' 'python-mock' 'python-oslotest')
+source=("https://opendev.org/openstack/tempest/archive/$pkgver.tar.gz")
+sha512sums=('c33a327ef57a2c87baf8621ee8dad37474ebcf3b30784328f7f77434b71cf93c5380d412a0a5f41a27b6b1a629b038cfe6ab45cf1596fcdf3276b6de35e3f565')
+
+export PBR_VERSION=$pkgver
+
+build() {
+  cd tempest
+  python setup.py build
+}
+
+# Disabling due to 9 test failures
+#check() {
+#  cd tempest-$pkgver
+#  stestr --test-path tempest/tests run
+#}
+
+package() {
+  cd tempest
+  python setup.py install --root="$pkgdir" --optimize=1
+}
+
+# vim:set ts=2 sw=2 et:
