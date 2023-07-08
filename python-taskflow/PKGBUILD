@@ -1,5 +1,5 @@
 # Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
-# Contributer: zhullyb <zhullyb@outlook.com>
+# Contributor: zhullyb <zhullyb@outlook.com>
 
 _pyname=taskflow
 pkgname=python-$_pyname
