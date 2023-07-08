@@ -1,0 +1,83 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=neutron-lib
+pkgname=python-$_pyname
+pkgver=3.7.0
+pkgrel=1
+pkgdesc="Neutron shared routines and utilities"
+arch=(any)
+url="https://docs.openstack.org/neutron-lib/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-sqlalchemy
+	python-pecan
+	python-keystoneauth1
+	python-netaddr
+	python-stevedore
+	python-os-ken
+	python-oslo-concurrency
+	python-oslo-config
+	python-oslo-context
+	python-oslo-db
+	python-oslo-i18n
+	python-oslo-log
+	python-oslo-messaging
+	python-oslo-policy
+	python-oslo-serialization
+	python-oslo-service
+	python-oslo-utils
+	python-oslo-versionedobjects
+	python-osprofiler
+	python-setproctitle
+	python-webob
+	python-os-traits
+)
+makedepends=(
+	python-setuptools
+	python-sphinx
+	python-openstackdocstheme
+	python-os-api-ref
+	python-reno
+)
+checkdepends=(
+	python-hacking
+	bandit
+	python-coverage
+	python-fixtures
+	python-flake8-import-order
+	python-pylint
+	python-isort
+	python-subunit
+	python-oslotest
+	python-reno
+	python-stestr
+	python-testresources
+	python-testscenarios
+	python-testtools
+)
+options=('!emptydirs')
+source=(https://github.com/openstack/neutron-lib/archive/refs/tags/$pkgver.tar.gz)
+md5sums=('d99dfca9dc743b32a81303461e7ce8e4')
+sha256sums=('8b5b3990b24d2dca479e7f040170da41d0e82b6b8a86c761407392a7838569e8')
+sha512sums=('7a082523d740fac9ea3d052e3701f924ff01bd0418679f502c7262e53ff3d53126c2385fd2831b7211780299545a30c91829a86d3dacc4a6ef9b5bade36ad9be')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
