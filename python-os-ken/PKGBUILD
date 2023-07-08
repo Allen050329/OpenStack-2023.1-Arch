@@ -1,0 +1,64 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=os-ken
+pkgname=python-$_pyname
+pkgver=2.6.0
+pkgrel=1
+pkgdesc="A component-based software defined networking framework for OpenStack."
+arch=(any)
+url="http://docs.openstack.org/os-ken/latest"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-eventlet
+	python-msgpack
+	python-netaddr
+	python-oslo-config
+	python-ovs-wrapper
+	python-routes
+	python-six
+	python-webob
+)
+makedepends=(
+	python-setuptools
+	python-sphinx
+	python-openstackdocstheme
+	python-reno
+)
+checkdepends=(
+	python-hacking
+	python-coverage
+	python-subunit
+	python-oslotest
+	python-stestr
+	python-testtools
+	python-nose
+	python-pycodestyle
+	python-pylint
+	python-ncclient
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('2e96287f78eced8bf6e55726084f6634')
+sha256sums=('86d11bcbf19c219d3ab9b1c376b060a9f8e455e645a6598ebfc0858f731f4458')
+sha512sums=('4c923e8e3b23b984505cffe761d28f01414cf0d4661deaeab0c0254aa34a6240e254b0fae026a73b6b8834406a1742c5a17f4df3a689887349374bf72ed8eea2')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+	install -Dm644 etc/os_ken/os_ken.conf "$pkgdir"/etc/os_ken/os_ken.conf
+}
