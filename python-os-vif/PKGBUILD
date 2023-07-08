@@ -1,0 +1,57 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=os-vif
+_pycname=${_pyname//-/_}
+pkgname=python-$_pyname
+pkgver=3.2.0
+pkgrel=1
+pkgdesc="A library for plugging and unplugging virtual interfaces in OpenStack."
+arch=(any)
+url="https://docs.openstack.org/os-vif/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-netaddr
+	python-oslo-concurrency
+	python-oslo-config
+	python-oslo-log
+	python-oslo-i18n
+	python-oslo-privsep
+	python-oslo-versionedobjects
+	python-ovsdbapp
+	python-pyroute2
+	python-stevedore
+	python-debtcollector
+)
+makedepends=(
+	python-setuptools
+	python-sphinx
+	python-openstackdocstheme
+	python-reno
+)
+checkdepends=(
+	python-coverage
+	python-oslotest
+	python-ovs-wrapper
+	python-stestr
+	python-testscenarios
+)
+source=(https://pypi.io/packages/source/${_pycname::1}/$_pycname/$_pycname-$pkgver.tar.gz)
+md5sums=('2edf82c0189f6f29786b88818f0f1cc7')
+sha256sums=('e1146276f7695457ef4191dc92ff6ad94ea74d79b5d699b303ce69aa3195e8d6')
+sha512sums=('ddc9acf3cfd06e6302b3b4a5d506b50626c82880ccdf796e84cfd16de1ed007b46325893c1895559b70ed0b30e50101b206062fd308f98111d010113381662d8')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pycname-$pkgver
+	python setup.py build
+}
+
+package(){
+	cd $_pycname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
