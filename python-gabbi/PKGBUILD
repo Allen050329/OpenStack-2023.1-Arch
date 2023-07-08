@@ -1,0 +1,49 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=gabbi
+pkgname=python-$_pyname
+pkgver=2.9.0
+pkgrel=1
+pkgdesc="Declarative HTTP testing library"
+arch=(any)
+url="https://github.com/cdent/gabbi"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-pytest
+	python-six
+	python-pyaml
+	python-urllib3
+	python-certifi
+	python-jsonpath-rw-ext
+	python-wsgi-intercept
+	python-colorama
+)
+makedepends=(python-setuptools)
+checkdepends=(
+	python-mock
+	python-stestr
+	python-coverage
+	python-pytest-cov
+	python-hacking
+	python-sphinx
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('049e5cab2fc6c834b8c9a2b074ae3d60')
+sha256sums=('ae99322f4767bac04f8bbf39584bd7f88f674cd97f1342a383554d6127d86f22')
+sha512sums=('10194385e27ec15d5c3f7cc4d1e1db4e99aae276d75a5e1bc2651ef8a93a65f102e86355dca6f8ab07f7d87d8407cf95f1a13381630bf102427a2192f4d041d4')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
