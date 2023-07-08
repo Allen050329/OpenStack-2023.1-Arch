@@ -9,6 +9,7 @@ pkgbase = python-bashate
 	checkdepends = python-stestr
 	checkdepends = python-subunit
 	checkdepends = python-coverage
+	checkdepends = python-discover
 	checkdepends = python-hacking
 	makedepends = python
 	makedepends = python-fixtures
