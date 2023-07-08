@@ -1,0 +1,20 @@
+pkgbase = python-ncclient
+	pkgdesc = Python library for NETCONF clients.
+	pkgver = 0.6.13
+	pkgrel = 1
+	url = http://ncclient.org/
+	arch = any
+	license = Apache-2.0
+	makedepends = python-paramiko
+	makedepends = python-lxml
+	makedepends = python-selectors2
+	makedepends = python-setuptools
+	depends = python-paramiko
+	depends = python-lxml
+	depends = python-selectors2
+	depends = python-six
+	options = !emptydirs
+	source = https://github.com/ncclient/ncclient/archive/v0.6.13.tar.gz
+	sha256sums = 924617320054f1b09d846400eed89fc9eea8bb8ef490fc21a51c62ca15d6b81d
+
+pkgname = python-ncclient
