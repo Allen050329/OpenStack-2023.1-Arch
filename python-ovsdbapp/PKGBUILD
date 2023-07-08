@@ -1,0 +1,53 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+# Contributor: BigfootACA <bigfoot@classfun.cn>
+
+_pyname=ovsdbapp
+pkgname=python-$_pyname
+pkgver=2.4.0
+pkgrel=1
+pkgdesc="A library for creating OVSDB applications"
+arch=(any)
+url="https://pypi.org/project/ovsdbapp/"
+license=(Apache)
+depends=(
+	openvswitch
+	python
+	python-pbr
+	python-fixtures
+	python-netaddr
+	python-ovs-wrapper
+)
+makedepends=(
+	python-setuptools
+	python-sphinx
+	python-openstackdocstheme
+	python-reno
+)
+checkdepends=(
+	python-hacking
+	python-coverage
+	python-isort
+	python-subunit
+	python-oslotest
+	python-pylint
+	python-stestr
+	python-testscenarios
+	python-testtools
+)
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('366a5b495780439c8dc9a2a73a24867a')
+sha256sums=('2faf26e7ce7979ba939b0afb5f191e2d4bc9a57480c11642d964ed3aaad3c51d')
+sha512sums=('5229b9bd9834607b8f90457c67128fc79f536d9d721a8b54fc1a6e6bdecbb0862a71b9964adba9c93814f5786f1bde834ed3bb994bc9b8535658e4da178db434')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root "$pkgdir" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
