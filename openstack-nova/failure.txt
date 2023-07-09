@@ -29,3 +29,5 @@ nova.tests.unit.virt.libvirt.test_imagebackend.EncryptedLvmTestCase.test_libvirt
 nova.tests.unit.virt.libvirt.test_imagebackend.EncryptedLvmTestCase.test_prealloc_image
 nova.tests.unit.virt.libvirt.test_imagebackend.EncryptedLvmTestCase.test_prealloc_image_without_write_access
 nova.tests.unit.api.openstack.compute.test_services.ServicesTestV253.test_update_forced_down_invalid_service
+nova.tests.unit.test_service.TestWSGIService.test_workers_set_default
+nova.tests.unit.test_service.TestWSGIService.test_workers_set_good_user_setting
