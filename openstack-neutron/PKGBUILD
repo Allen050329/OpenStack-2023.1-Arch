@@ -245,6 +245,7 @@ _package_pkg(){
 	done
 	chmod 0750 "$pkgdir"/etc/sudoers.d
 	chmod 0440 "$pkgdir"/etc/sudoers.d/$_pyname
+	mkdir -vp $DATADIR/l3_agent
 }
 
 _package_doc(){
