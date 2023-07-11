@@ -1,0 +1,16 @@
+[Unit]
+Description=OpenStack Manila Share (manila-share)
+After=postgresql.service mysql.service rabbitmq.service network-online.target local-fs.target remote-fs.target 
+Wants=network-online.target 
+
+[Service]
+LimitNOFILE=131072
+LimitNPROC=131072
+Type=simple
+User=manila
+ExecStart=/usr/bin/manila-share --log-file=/var/log/manila/share.log
+PrivateTmp=true
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

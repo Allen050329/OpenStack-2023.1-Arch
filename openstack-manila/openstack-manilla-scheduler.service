@@ -1,0 +1,16 @@
+[Unit]
+Description=OpenStack Manila Scheduler (manila-scheduler)
+After=postgresql.service mysql.service httpd.service rabbitmq.service network-online.target local-fs.target remote-fs.target 
+Wants=network-online.target
+
+[Service]
+LimitNOFILE=131072
+LimitNPROC=131072
+Type=simple
+User=manila
+ExecStart=/usr/bin/manila-scheduler --log-file=/var/log/manila/scheduler.log
+PrivateTmp=true
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
