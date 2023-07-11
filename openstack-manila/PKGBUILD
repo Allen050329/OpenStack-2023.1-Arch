@@ -88,8 +88,8 @@ source=(
 	sysusers.conf
 	tmpfiles.conf
 	wsgi-manila-api.conf
-	openstack-manilla-scheduler.service
-	openstack-manilla-share.service
+	openstack-manila-scheduler.service
+	openstack-manila-share.service
 )
 md5sums=('26cf419a294ee321d3124c95155b3bad'
          '3b4523975186a30e9e9396c52e4beb06'
