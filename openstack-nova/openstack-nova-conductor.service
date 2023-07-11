@@ -1,6 +1,6 @@
 [Unit]
 Description=OpenStack Nova Conductor Server
-After=syslog.target network.target
+After=syslog.target network.target httpd.service rabbit.service
 
 [Service]
 Type=notify
