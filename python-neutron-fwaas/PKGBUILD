@@ -48,6 +48,8 @@ checkdepends=(
 	python-ddt
 	# python-doc8
 	python-pygments
+	postgresql-libs
+	libnetfilter_log
 )
 options=('!emptydirs')
 source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
