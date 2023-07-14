@@ -1,0 +1,52 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+
+_pyname=neutron-fwaas-dashboard
+pkgname=python-$_pyname
+pkgver=5.0.0
+pkgrel=1
+pkgdesc="Neutron FWaaS Dashboard"
+arch=(any)
+url="https://docs.openstack.org/neutron-fwaas-dashboard/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	openstack-horizon
+	python-neutronclient
+)
+makedepends=(python-setuptools)
+checkdepends=(
+	python-hacking
+	python-coverage
+	python-sphinx
+	python-openstackdocstheme
+	python-reno
+	python-selenium
+	python-xvfbwrapper
+	python-testtools
+	firefox
+	xorg-server-xvfb
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('17258d97ce64079aec4440233fe7f920')
+sha256sums=('c93845d99a75b419d698d00fcc43215935f1ed162b233a52615b4528d71db531')
+sha512sums=('acde70ff05f678479130c5ca62567430d6002552569a2f9f093f2238d099701f2ed5f6b88deb5156f66bee606c33e8ccaad422549cb8e225fae75b888b963529')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+check(){
+	cd $_pyname-$pkgver
+	PYTHONPATH="/usr/share/openstack-horizon" python manage.py test --settings=neutron_fwaas_dashboard.test.settings --exclude-tag integration
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
