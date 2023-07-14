@@ -46,7 +46,13 @@ check(){
 }
 
 package(){
+	backup=(
+		etc/neutron/neutron-fwaas-policy.json
+	)
 	cd $_pyname-$pkgver
+	CONFDIR="$pkgdir/etc/neutron"
+	mkdir -p "$CONFDIR"
+	install -Dm644 etc/neutron-fwaas-policy.json "$CONFDIR"
 	python setup.py install --root="$pkgdir/" --optimize=1
 	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 }

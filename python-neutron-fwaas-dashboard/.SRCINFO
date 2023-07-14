@@ -27,3 +27,4 @@ pkgbase = python-neutron-fwaas-dashboard
 	sha512sums = acde70ff05f678479130c5ca62567430d6002552569a2f9f093f2238d099701f2ed5f6b88deb5156f66bee606c33e8ccaad422549cb8e225fae75b888b963529
 
 pkgname = python-neutron-fwaas-dashboard
+	backup = etc/neutron/neutron-fwaas-policy.json
