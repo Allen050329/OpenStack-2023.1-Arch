@@ -1,0 +1,76 @@
+# Maintainer: Zenphyrnix <zenphyrnixcloud@proton.me>
+
+_pyname=neutron-vpnaas
+pkgname=python-$_pyname
+pkgver=22.0.0
+pkgrel=1
+pkgdesc="OpenStack Networking FWaaS"
+arch=(any)
+url="https://docs.openstack.org/neutron-fwaas/latest/"
+license=(Apache)
+depends=(
+	python
+	python-pbr
+	python-eventlet
+	python-netaddr
+	python-sqlalchemy
+	python-alembic
+	python-neutron-lib
+	python-os-ken 
+	python-oslo-config
+	python-oslo-db
+	python-oslo-log
+	python-oslo-messaging
+	python-oslo-service
+	python-oslo-utils
+	python-oslo-privsep
+	python-pyroute2
+	openstack-neutron
+	python-pyzmq
+)
+makedepends=(python-setuptools)
+checkdepends=(
+	python-hacking
+	python-coverage
+	python-mock
+	python-subunit
+	python-requests-mock
+	python-oslo-concurrency
+	python-stestr
+	python-testresources
+	python-testtools
+	python-testscenarios
+	python-webob
+	python-webtest
+	python-oslotest
+	python-pymysql
+	python-psycopg2
+	python-ddt
+	# python-doc8
+	python-pygments
+	postgresql-libs
+	libnetfilter_log
+)
+options=('!emptydirs')
+source=(https://pypi.io/packages/source/${_pyname::1}/$_pyname/$_pyname-$pkgver.tar.gz)
+md5sums=('0bccf4ad2aa4c47c6f194f705fe5bf4e')
+sha256sums=('5c8df2fbe926210b0149ae10cebbbeae3bb863585db860a07c575b836917f8c9')
+sha512sums=('e9249b0a817c49e4008cd2383f34ea1d8186685b0727265fb222e32dc99bdb87a1ffa3147040743048a981de0abba5a9c633e28762be0556afea2003c553adb3')
+
+export PBR_VERSION=$pkgver
+
+build(){
+	cd $_pyname-$pkgver
+	python setup.py build
+}
+
+check(){
+	cd $_pyname-$pkgver
+	stestr run
+}
+
+package(){
+	cd $_pyname-$pkgver
+	python setup.py install --root="$pkgdir/" --optimize=1
+	install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
