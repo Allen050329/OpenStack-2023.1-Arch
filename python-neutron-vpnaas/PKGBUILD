@@ -4,9 +4,9 @@ _pyname=neutron-vpnaas
 pkgname=python-$_pyname
 pkgver=22.0.0
 pkgrel=1
-pkgdesc="OpenStack Networking FWaaS"
+pkgdesc="OpenStack Networking VPNaaS"
 arch=(any)
-url="https://docs.openstack.org/neutron-fwaas/latest/"
+url="https://docs.openstack.org/neutron-vpnaas/latest/"
 license=(Apache)
 depends=(
 	python
