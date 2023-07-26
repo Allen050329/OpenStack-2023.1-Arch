@@ -13,6 +13,7 @@ depends=(
 	python-pbr
 	openstack-horizon
 	python-neutronclient
+	neutron-fwaas
 )
 makedepends=(python-setuptools)
 checkdepends=(
